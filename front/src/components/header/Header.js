@@ -1,7 +1,7 @@
 import { SearchOutlined } from '@ant-design/icons';
 import { Col, Input, Row } from 'antd';
 import React, { useMemo, useCallback } from 'react';
-import HeaderButtons from './HeaderButtons';
+import HeaderButtons from '../header/HeaderButtons';
 const { Search } = Input;
 
 const Header = () => {
@@ -30,9 +30,11 @@ const Header = () => {
       <div style={headerStyle}>
         <Row>
           <Col span={8} style={style3}>
-            <img src="https://sgimage.netmarble.com/images/netmarble/enn/20210407/tpew1617761984326.png"
-            onClick={logoImageClicked}
-            style={{cursor: 'pointer'}}></img>
+            <img
+              src="https://sgimage.netmarble.com/images/netmarble/enn/20210407/tpew1617761984326.png"
+              onClick={logoImageClicked}
+              style={{ cursor: 'pointer' }}
+            ></img>
           </Col>
           <Col span={8} style={style3}>
             <Search

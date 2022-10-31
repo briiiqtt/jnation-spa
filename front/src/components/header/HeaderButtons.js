@@ -1,20 +1,9 @@
 import { EditFilled, UserOutlined } from '@ant-design/icons';
-import React, { useMemo, useState, useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-
-// import { loginAction } from '../../reducers';
-
-import NotificDropdown from './NotificDropdown';
-import ProfileDropdown from './ProfileDropdown';
+import { Avatar } from 'antd';
+import React, { useMemo, useState, useCallback } from 'react';
+import NotificBtn from './NotificBtn';
 
 const HeaderButtons = () => {
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const dispatch = useDispatch();
-
-  const onLoginBtn = useCallback(() => {
-    // dispatch(loginAction({ id: 'id', pw: 'pw' }));
-  });
-
   const iconStyle = useMemo(() => ({
     fontSize: '1.5rem',
     color: '#ffffff',
@@ -35,7 +24,6 @@ const HeaderButtons = () => {
     margin: '0px 10px',
     cursor: 'pointer',
   }));
-
   const btnMouseEnter = useCallback((e) => {
     e.target.style.border = '3px solid #ffffff';
     e.target.style.fontWeight = 'bold';
@@ -44,10 +32,10 @@ const HeaderButtons = () => {
     e.target.style.border = '1px solid #ffffff';
     e.target.style.fontWeight = 'normal';
   });
-
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const notLoggedIn = (
     <>
-      <span style={outerSpanStyle} onClick={onLoginBtn}>
+      <span style={outerSpanStyle}>
         <span
           style={btnStyle}
           onMouseEnter={btnMouseEnter}
@@ -78,10 +66,10 @@ const HeaderButtons = () => {
         <EditFilled />
       </span>
       <span style={iconStyle}>
-        <NotificDropdown />
+        <NotificBtn />
       </span>
       <span style={iconStyle}>
-        <ProfileDropdown />
+        <Avatar style={{ bottom: '3px' }} size={27} icon={<UserOutlined />} />
       </span>
     </div>
   );

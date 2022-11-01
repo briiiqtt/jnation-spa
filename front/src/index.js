@@ -6,9 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import rootReducer from './reducers/rootReducer';
+import rootReducer from './reducers';
 
 const enhancer =
+  // eslint-disable-next-line no-undef
   process.env.NODE_ENV === 'production'
     ? compose(applyMiddleware())
     : composeWithDevTools(applyMiddleware());

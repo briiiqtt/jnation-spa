@@ -3,7 +3,7 @@ import React, { useMemo, useState, useCallback } from 'react';
 import { Popover } from 'antd';
 import { Avatar } from 'antd';
 import { useDispatch } from 'react-redux';
-import { action_logout } from '../../reducers';
+import { action_logout } from '../../reducers/users';
 
 const NotificDropdown = () => {
   const dispatch = useDispatch();

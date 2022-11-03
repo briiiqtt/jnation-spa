@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import NotificDropdown from './NotificDropdown';
 import ProfileDropdown from './ProfileDropdown';
 
-import { action_login } from '../../reducers';
+import { action_login } from '../../reducers/users';
 
 const HeaderButtons = () => {
   const isLoggedIn = useSelector((state) => state.session.isLoggedIn);

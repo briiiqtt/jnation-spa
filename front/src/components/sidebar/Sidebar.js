@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import SidebarTitle from './SidebarTitle';
 import SidebarContent from './SidebarContent';
-import { action_getMenu } from '../../reducers';
+import { action_getMenu } from '../../reducers/board';
 
 const Sidebar = () => {
   const dispatch = useDispatch();

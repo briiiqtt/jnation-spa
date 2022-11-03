@@ -1,0 +1,19 @@
+.sidebar::-webkit-scrollbar {
+  display: none;
+  width: 0 !important;
+}
+
+.menu-inner {
+  width: 100%;
+  padding: 10px 0px 10px 20px;
+  margin: 0px;
+}
+.menu-inner:hover {
+  background-color: #eeeeee;
+}
+.ant-collapse-header:hover {
+  background-color: #eeeeee;
+}
+.ant-popover-title {
+  background-color: #e6eaec;
+}

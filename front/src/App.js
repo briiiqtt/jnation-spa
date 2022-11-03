@@ -1,4 +1,5 @@
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
+import './css/app.css';
 import React from 'react';
 
 import PcLayout from './layouts/PCLayout';

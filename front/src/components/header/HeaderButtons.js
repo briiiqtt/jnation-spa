@@ -17,9 +17,11 @@ const HeaderButtons = () => {
 
   const iconStyle = useMemo(() => ({
     fontSize: '1.5rem',
+    position: 'relative',
+    bottom: '8px',
     color: '#ffffff',
-    padding: '5px',
-    margin: '10px',
+    // padding: '5px',
+    margin: '0px 20px',
     cursor: 'pointer',
   }));
   const outerSpanStyle = useMemo(() => ({
@@ -68,13 +70,9 @@ const HeaderButtons = () => {
     </>
   );
 
-  const writeBtnClicked = useCallback(() => {
-    // location.href = `${__dirname}post`;
-  });
-
   const loggedIn = (
-    <div>
-      <span style={iconStyle} onClick={writeBtnClicked}>
+    <>
+      <span style={iconStyle}>
         <EditFilled />
       </span>
       <span style={iconStyle}>
@@ -83,10 +81,29 @@ const HeaderButtons = () => {
       <span style={iconStyle}>
         <ProfileDropdown />
       </span>
-    </div>
+    </>
   );
 
-  return <>{isLoggedIn ? loggedIn : notLoggedIn}</>;
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        top: '18px',
+        left: '120px',
+      }}
+    >
+      <span
+        style={{
+          position: 'relative',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        {isLoggedIn ? loggedIn : notLoggedIn}
+      </span>
+    </div>
+  );
 };
 
 export default HeaderButtons;

@@ -54,5 +54,5 @@ function* watchLogout() {
 }
 
 export default function* userSaga() {
-  yield all([fork(watchLogin), fork(watchLogout)]);
+  // yield all([fork(watchLogin), fork(watchLogout)]);
 }

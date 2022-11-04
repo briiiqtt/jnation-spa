@@ -8,7 +8,7 @@ import ProfileDropdown from './ProfileDropdown';
 import { action_login } from '../../reducers/users';
 
 const HeaderButtons = () => {
-  const isLoggedIn = useSelector((state) => state.session.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const dispatch = useDispatch();
 
   const onLoginBtn = useCallback(() => {

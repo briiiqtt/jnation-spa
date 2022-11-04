@@ -7,9 +7,9 @@ import { action_getMenu } from '../../reducers/board';
 
 const Sidebar = () => {
   const dispatch = useDispatch();
-  const menus = useSelector((state) => state.menu);
+  const menus = useSelector((state) => state.etc.menu);
   useEffect(() => {
-    dispatch(action_getMenu());
+    // dispatch(action_getMenu());
   }, [menus]);
 
   return (

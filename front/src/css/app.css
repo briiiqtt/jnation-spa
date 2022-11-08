@@ -1,7 +1,7 @@
-.sidebar::-webkit-scrollbar {
+/* .sidebar::-webkit-scrollbar {
   display: none;
   width: 0 !important;
-}
+} */
 
 .menu-inner {
   width: 100%;

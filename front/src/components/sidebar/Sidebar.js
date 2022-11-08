@@ -23,8 +23,8 @@ const Sidebar = () => {
           // right: '1',
           // zIndex: '1',
           width: '268px',
-          // height: `calc(100vh - 50px)`,
-          // overflowY: 'scroll',
+          height: `calc(100vh - 58px)`,
+          overflowY: 'scroll',
           // msOverflowStyle: 'none',
         }}
         className="sidebar"

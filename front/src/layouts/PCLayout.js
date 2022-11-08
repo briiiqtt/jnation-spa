@@ -15,7 +15,7 @@ const PCLayout = () => {
           style={{
             display: 'flex',
             justifyContent: 'center',
-            height: `calc(100vh - 50px)`,
+            height: `calc(100vh - 58px)`,
             overflowY: 'scroll',
             msOverflowStyle: 'none',
           }}

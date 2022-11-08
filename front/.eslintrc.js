@@ -11,5 +11,5 @@ module.exports = {
     ecmaVersion: 'latest',
   },
   plugins: ['react'],
-  rules: {},
+  rules: { 'react/prop-types': 0 },
 };

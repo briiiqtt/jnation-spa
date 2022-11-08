@@ -6,7 +6,7 @@ import Sidebar from '../components/sidebar/Sidebar';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-const PCLayout = () => {
+const PCLayout = () => {//
   return (
     <>
       <BrowserRouter>

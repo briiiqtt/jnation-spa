@@ -47,6 +47,10 @@ const HeaderButtons = () => {
     e.target.style.fontWeight = 'normal';
   });
 
+  const login = useCallback(() => {
+    dispatch(action_login());
+  });
+
   const notLoggedIn = (
     <>
       <span style={outerSpanStyle} onClick={onLoginBtn}>
@@ -54,6 +58,7 @@ const HeaderButtons = () => {
           style={btnStyle}
           onMouseEnter={btnMouseEnter}
           onMouseLeave={btnMouseLeave}
+          onClick={login}
         >
           로그인
         </span>

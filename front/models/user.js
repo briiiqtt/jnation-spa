@@ -1,6 +1,6 @@
 const db = require('./db');
 
-const user = {
+const userModel = {
   get_all: async () => {
     const sql = `select*from user`;
     const params = [];
@@ -8,7 +8,7 @@ const user = {
   },
   async add_user(id, pw) {
     let sql = `
-  insert into
+    insert into
       user(
           uid,
           idx,
@@ -28,17 +28,26 @@ const user = {
     const params = [uid, id, nickname, pw];
     return db.query(sql, params);
   },
-  async is_this_userId_available(id) {
+  async get_uid_by_id(id) {
     const sql = `
-  select count(*) as count
-  from user
-  where 1=1
-  and deleted_at is null
-  and id = ?
+    select uid
+    from user
+    where deleted_at is null
+    and id = ?
   `;
     const params = [id];
     return db.query(sql, params);
   },
+  async get_aster_by_id() {
+    // const sql = `
+    // select id, nickname, auth, created_at
+    // from user
+    // where deleted_at is null
+    // and id = ?
+    // `;
+    // const params = [id];
+    // return db.query(sql, params);
+  },
 };
 
-module.exports = user;
+module.exports = userModel;

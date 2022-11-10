@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const axios = require('axios');
+require('dotenv').config();
 
 const userRouter = require('./routes/userRouter');
 

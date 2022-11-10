@@ -1,6 +1,6 @@
 import { all, fork } from '@redux-saga/core/effects';
 
-import axios from 'axios';
+import axios from './index';
 
 function loginAPI(data) {
   return axios.post('/api/login', data);

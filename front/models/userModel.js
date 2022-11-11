@@ -38,15 +38,16 @@ const userModel = {
     const params = [id];
     return db.query(sql, params);
   },
-  async get_aster_by_id() {
-    // const sql = `
-    // select id, nickname, auth, created_at
-    // from user
-    // where deleted_at is null
-    // and id = ?
-    // `;
-    // const params = [id];
-    // return db.query(sql, params);
+  async login(id, pw) {
+    const sql = `
+    select uid, idx, id, nickname, pw, auth, created_at
+    from user
+    where deleted_at is null
+    and id = ?
+    and pw = ?
+    `;
+    const params = [id, pw];
+    return db.query(sql, params);
   },
 };
 

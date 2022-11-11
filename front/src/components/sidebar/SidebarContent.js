@@ -1,13 +1,12 @@
 import { Collapse } from 'antd';
-import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { action_getMenu } from '../../reducers/menuReducer';
 
 const { Panel } = Collapse;
 
 const SidebarContent = ({ menus }) => {
-  const dispatch = useDispatch();
-
   return (
     <>
       <div style={{ padding: '20px' }}>
@@ -18,19 +17,14 @@ const SidebarContent = ({ menus }) => {
           전체 글
         </div>
         <Collapse
-          defaultActiveKey={menus.map((category) => category.key)}
+          defaultActiveKey={menus.map((group) => group.uid)}
           bordered={false}
-          //  onChange={onChange}
-          className="menu-category"
+          className="menu-content"
           expandIconPosition="end"
         >
-          {menus.map((category) => (
-            <Panel
-              header={category.name}
-              key={category.key}
-              className="menu-panel"
-            >
-              {category.innerMenu.map((inner, i) => (
+          {menus.map((group) => (
+            <Panel header={group.name} key={group.uid} className="menu-panel">
+              {group.content.map((inner, i) => (
                 <Link
                   to={`/board/${inner.boardId}`}
                   key={i}

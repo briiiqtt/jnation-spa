@@ -1,21 +1,22 @@
 const express = require('express');
 const router = express.Router();
-const userModel = require('../models/user');
+const userModel = require('../models/userModel');
 const InsufficientArgumentError = require('../Errors/InsufficientArgumentError');
+const LoginFailedError = require('../Errors/LoginFailedError');
 
 router.use((req, res, next) => {
   next();
 });
 
-router.use('/get_all', async (req, res) => {
+router.get('/get_all', async (req, res) => {
   try {
     const qr = await userModel.get_all();
     res.send(qr);
   } catch (e) {
-    res.status(500).send();
+    res.sendStatus(500);
   }
 });
-router.use('/add', async (req, res) => {
+router.post('/add', async (req, res) => {
   try {
     const { id, pw } = req.body;
     const isValid = [id, pw].every((v) => v ?? false);
@@ -26,14 +27,14 @@ router.use('/add', async (req, res) => {
     res.send(bool);
   } catch (e) {
     if (e instanceof InsufficientArgumentError) {
-      res.send(400).send();
+      res.sendStatus(400);
     } else {
       console.error(e);
-      res.status(500).send();
+      res.sendStatus(500);
     }
   }
 });
-router.use('/is_avail_id', async (req, res) => {
+router.get('/is_avail_id', async (req, res) => {
   try {
     const { id } = req.query;
     const isValid = [id].every((v) => v ?? false);
@@ -45,26 +46,34 @@ router.use('/is_avail_id', async (req, res) => {
     res.send(bool);
   } catch (e) {
     if (e instanceof InsufficientArgumentError) {
-      res.send(400).send();
+      res.sendStatus(400);
     } else {
       console.error(e);
-      res.status(500).send();
+      res.sendStatus(500);
     }
   }
 });
-router.use('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const { id, pw } = req.body;
+    console.log(id, pw);
     const isValid = [id, pw].every((v) => v ?? false);
     if (!isValid) throw new InsufficientArgumentError();
 
-    //const qr = await userModel
+    const qr = await userModel.login(id, pw);
+    if (qr.length === 1) {
+      res.send(qr[0]);
+    } else {
+      throw new LoginFailedError();
+    }
   } catch (e) {
     if (e instanceof InsufficientArgumentError) {
-      res.send(400).send();
+      res.sendStatus(400);
+    } else if (e instanceof LoginFailedError) {
+      res.sendStatus(404);
     } else {
       console.error(e);
-      res.status(500).send();
+      res.sendStatus(500);
     }
   }
 });

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 
-import user from './users';
-import etc from './etc';
-import board from './board';
+import user from './userReducer';
+import board from './boardReducer';
+import menu from './menuReducer';
 
 const rootReducer = combineReducers({
   index: (state = {}, action) => {
@@ -11,9 +11,9 @@ const rootReducer = combineReducers({
         return state;
     }
   },
-  etc,
   user,
   board,
+  menu,
 });
 
 export default rootReducer;

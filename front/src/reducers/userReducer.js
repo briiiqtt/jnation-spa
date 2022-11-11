@@ -1,6 +1,6 @@
-export const LOG_IN_REQ = 'LOG_IN_REQ`';
-export const LOG_IN_SUC = 'LOG_IN_SUC`';
-export const LOG_IN_ERR = 'LOG_IN_ERR`';
+export const LOG_IN_REQ = 'LOG_IN_REQ';
+export const LOG_IN_SUC = 'LOG_IN_SUC';
+export const LOG_IN_ERR = 'LOG_IN_ERR';
 export const LOG_OUT_REQ = 'LOG_OUT_REQ';
 export const LOG_OUT_SUC = 'LOG_OUT_SUC';
 export const LOG_OUT_ERR = 'LOG_OUT_ERR';
@@ -14,9 +14,10 @@ export const action_logout = () => ({
 });
 
 const initialState = {
+  me: null,
   isLoggedIn: false,
   isLoggingIn: false,
-  user: null,
+  isLoggingOut: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -25,7 +26,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggingIn: true,
-        user: action.data,
       };
     }
     case LOG_IN_SUC: {
@@ -33,7 +33,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         isLoggingIn: false,
         isLoggedIn: true,
-        user: action.data,
+        me: action.data,
       };
     }
     case LOG_IN_ERR: {
@@ -41,7 +41,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         isLoggingIn: false,
         isLoggedIn: false,
-        user: action.data,
+        me: action.data,
       };
     }
     case LOG_OUT_REQ: {
@@ -55,7 +55,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         isLoggingOut: false,
         isLoggedIn: false,
-        user: null,
+        me: null,
       };
     }
     case LOG_OUT_ERR: {

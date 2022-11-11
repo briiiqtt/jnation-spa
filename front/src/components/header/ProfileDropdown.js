@@ -2,8 +2,8 @@ import { UserOutlined } from '@ant-design/icons';
 import React, { useMemo, useState, useCallback } from 'react';
 import { Popover } from 'antd';
 import { Avatar } from 'antd';
-import { useDispatch } from 'react-redux';
-import { action_logout } from '../../reducers/users';
+import { useDispatch, useSelector } from 'react-redux';
+import { action_logout } from '../../reducers/userReducer';
 
 const NotificDropdown = () => {
   const dispatch = useDispatch();
@@ -27,9 +27,16 @@ const NotificDropdown = () => {
     setClicked(open);
   };
 
+  const me = useSelector((state) => state.user.me);
+
   const profile = useMemo(() => {
     return (
-      <Avatar style={{ bottom: '3px' }} size={50} icon={<UserOutlined />} />
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Avatar style={{ bottom: '3px' }} size={50} icon={<UserOutlined />} />
+        <span style={{ fontSize: '1.5rem', margin: '0px 10px' }}>
+          {me.nickname} ({me.id})
+        </span>
+      </div>
     );
   });
 

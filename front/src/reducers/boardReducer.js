@@ -26,7 +26,7 @@ const dummyPosts = new Array(11).fill().map((val, idx) => ({
 }));
 
 const initialState = {
-  boardId: '',
+  boardId: 'temp',
   boardName: '',
   post: {
     posts: [],

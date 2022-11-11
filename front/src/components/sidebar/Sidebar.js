@@ -3,14 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import SidebarTitle from './SidebarTitle';
 import SidebarContent from './SidebarContent';
-import { action_getMenu } from '../../reducers/board';
+import { action_getMenu } from '../../reducers/menuReducer';
 
 const Sidebar = () => {
   const dispatch = useDispatch();
-  const menus = useSelector((state) => state.etc.menu);
+  const menus = useSelector((state) => state.menu.menus);
   useEffect(() => {
-    // dispatch(action_getMenu());
-  }, [menus]);
+    dispatch(action_getMenu());
+    console.log(menus);
+  }, []);
 
   return (
     <>

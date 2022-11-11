@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { action_getPosts } from '../../reducers/board';
+import { action_getPosts } from '../../reducers/boardReducer';
 
 import BoardBar from './BoardBar';
 import BoardBody from './BoardBody';

@@ -5,8 +5,10 @@ import Header from '../components/header/Header';
 import Sidebar from '../components/sidebar/Sidebar';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import MenuManager from '../components/Manager/MenuManager';
 
-const PCLayout = () => {//
+const PCLayout = () => {
+  //
   return (
     <>
       <BrowserRouter>
@@ -24,6 +26,7 @@ const PCLayout = () => {//
           <Body>
             <Routes>
               <Route path="/board/:boardId" element={<Board />}></Route>
+              <Route path="/manage" element={<MenuManager />}></Route>
             </Routes>
           </Body>
         </div>

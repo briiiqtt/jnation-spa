@@ -59,10 +59,10 @@ router.get('/get', async (req, res) => {
     const qr = await menuModel.get_menu_group_uids();
     const menus = [];
     for (let r of qr) {
-      r = { ...r, content: [] };
+      r = { ...r, contents: [] };
       const qrr = await menuModel.get_content_by_group_uid(r.uid);
       for (let rr of qrr) {
-        r.content.push({ ...rr });
+        r.contents.push({ ...rr });
       }
       menus.push(r);
     }

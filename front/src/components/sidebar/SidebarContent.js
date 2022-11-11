@@ -17,16 +17,18 @@ const SidebarContent = ({ menus }) => {
           전체 글
         </div>
         <Collapse
-          defaultActiveKey={menus.map((group) => group.uid)}
+          activeKey={menus.map((menu) => menu.uid)}
           bordered={false}
           className="menu-content"
           expandIconPosition="end"
         >
           {menus.map((group) => (
             <Panel header={group.name} key={group.uid} className="menu-panel">
-              {group.content.map((inner, i) => (
+              {group.contents.map((content, i) => (
                 <Link
-                  to={`/board/${inner.boardId}`}
+                  to={`${
+                    content.type === 'board' ? `/board/${content.uid}` : ''
+                  }`}
                   key={i}
                   style={{ color: 'black' }}
                 >
@@ -35,7 +37,7 @@ const SidebarContent = ({ menus }) => {
                     className="menu-inner"
                     style={{ cursor: 'pointer' }}
                   >
-                    {inner.name}
+                    {content.name}
                   </p>
                 </Link>
               ))}

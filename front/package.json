@@ -52,5 +52,8 @@
   "devDependencies": {
     "eslint": "^8.26.0",
     "eslint-plugin-react": "^7.31.10"
+  },
+  "optionalDependencies": {
+    "fsevents": "*"
   }
 }

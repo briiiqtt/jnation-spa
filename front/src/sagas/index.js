@@ -5,17 +5,7 @@ import axios from 'axios';
 import userSaga from './userSaga';
 import menuSaga from './menuSaga';
 
-// export const axios = _axios.create({
-//   baseURL:
-//     process.env.NODE_ENV === 'development'
-//       ? 'localhost:50080'
-//       : process.env.BACKEND_HOST + ':' + process.env.BACKEND_PORT,
-// });
-axios.defaults.baseURL =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:50080'
-    : `${process.env.BACKEND_HOST}:${process.env.BACKEND_PORT}`;
-// axios.defaults.withCredentials = true;
+axios.defaults.baseURL = `http://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}`;
 
 export default function* rootSaga() {
   yield all([fork(userSaga), fork(menuSaga)]);

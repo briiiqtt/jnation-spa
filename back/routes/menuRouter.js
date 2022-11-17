@@ -55,6 +55,7 @@ router.post('/content/add', async (req, res) => {
   }
 });
 router.get('/get', async (req, res) => {
+  console.log('/menu/get', new Date.toString());
   try {
     const qr = await menuModel.get_menu_group_uids();
     const menus = [];

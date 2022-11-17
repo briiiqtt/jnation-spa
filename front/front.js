@@ -8,7 +8,7 @@ app.use(express.static(path.join(__dirname, `build`)));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/', (req, res) => {
+app.get('/main', (req, res) => {
   console.log(__dirname);
   res.sendFile(`${__dirname}/build/index.html`);
 });

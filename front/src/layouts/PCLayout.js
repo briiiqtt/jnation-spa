@@ -25,7 +25,7 @@ const PCLayout = () => {
           <Sidebar />
           <Body>
             <Routes>
-              <Route path="/board/:boardId" element={<Board />}></Route>
+              <Route path="/board/:boardUID" element={<Board />}></Route>
               <Route path="/manage" element={<MenuManager />}></Route>
             </Routes>
           </Body>

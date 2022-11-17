@@ -11,8 +11,8 @@ router.use((req, res, next) => {
 router.post('/group/add', async (req, res) => {
   try {
     const { name } = req.body;
-    const isValid = [name].every((v) => v ?? false);
-    if (!isValid) throw new InsufficientArgumentError();
+    const isSufficient = [name].every((v) => v ?? false);
+    if (!isSufficient) throw new InsufficientArgumentError();
 
     const qr = await menuModel.add_menu_group(name);
     if (qr.affectedRows === 1) {
@@ -33,8 +33,8 @@ router.post('/content/add', async (req, res) => {
   try {
     const { menuGroupUID, name } = req.body;
     let { ref, type } = req.body;
-    const isValid = [menuGroupUID, name].every((v) => v ?? false);
-    if (!isValid) throw new InsufficientArgumentError();
+    const isSufficient = [menuGroupUID, name].every((v) => v ?? false);
+    if (!isSufficient) throw new InsufficientArgumentError();
 
     ref = !ref ? null : ref;
     type = !type ? null : type;
@@ -55,7 +55,6 @@ router.post('/content/add', async (req, res) => {
   }
 });
 router.get('/get', async (req, res) => {
-  console.log('/menu/get', new Date.toString());
   try {
     const qr = await menuModel.get_menu_group_uids();
     const menus = [];

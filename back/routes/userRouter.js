@@ -19,8 +19,8 @@ router.get('/get_all', async (req, res) => {
 router.post('/add', async (req, res) => {
   try {
     const { id, pw } = req.body;
-    const isValid = [id, pw].every((v) => v ?? false);
-    if (!isValid) throw new InsufficientArgumentError();
+    const isSufficient = [id, pw].every((v) => v ?? false);
+    if (!isSufficient) throw new InsufficientArgumentError();
 
     const qr = await userModel.is_this_userId_available(id);
     let bool = qr[0].count === 0;
@@ -37,8 +37,8 @@ router.post('/add', async (req, res) => {
 router.get('/is_avail_id', async (req, res) => {
   try {
     const { id } = req.query;
-    const isValid = [id].every((v) => v ?? false);
-    if (!isValid) throw new InsufficientArgumentError();
+    const isSufficient = [id].every((v) => v ?? false);
+    if (!isSufficient) throw new InsufficientArgumentError();
 
     const qr = await userModel.get_uid_by_id(id);
     console.log(qr);
@@ -57,8 +57,8 @@ router.post('/login', async (req, res) => {
   try {
     const { id, pw } = req.body;
     console.log(id, pw);
-    const isValid = [id, pw].every((v) => v ?? false);
-    if (!isValid) throw new InsufficientArgumentError();
+    const isSufficient = [id, pw].every((v) => v ?? false);
+    if (!isSufficient) throw new InsufficientArgumentError();
 
     const qr = await userModel.login(id, pw);
     if (qr.length === 1) {

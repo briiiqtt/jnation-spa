@@ -7,6 +7,7 @@ const cors = require('cors');
 
 const userRouter = require('./routes/userRouter');
 const menuRouter = require('./routes/menuRouter');
+const boardRouter = require('./routes/boardRouter');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -23,3 +24,4 @@ app.use(
 
 app.use('/user', userRouter);
 app.use('/menu', menuRouter);
+app.use('/board', boardRouter);

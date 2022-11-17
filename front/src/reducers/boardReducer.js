@@ -1,54 +1,48 @@
-export const SET_BOARD_ID_REQ = 'SET_BOARD_ID_REQ';
-export const SET_BOARD_ID_SUC = 'SET_BOARD_ID_SUC';
-export const SET_BOARD_ID_ERR = 'SET_BOARD_ID_ERR';
 export const GET_POSTS_REQ = 'GET_POSTS_REQ';
 export const GET_POSTS_SUC = 'GET_POSTS_SUC';
 export const GET_POSTS_ERR = 'GET_POSTS_ERR';
 
-export const action_setBoardId = (boardId) => ({
-  type: SET_BOARD_ID_REQ,
-  data: boardId,
-});
-export const action_getPosts = () => ({
+export const action_getPosts = (boardUID) => ({
   type: GET_POSTS_REQ,
+  data: { boardUID },
 });
-
-const dummyPosts = new Array(11).fill().map((val, idx) => ({
-  key: idx,
-  id: 'id' + idx,
-  title: '제목' + idx,
-  author: '작성자' + idx,
-  content: '본문' + idx,
-  viewCnt: 125,
-  comments: [1, 2, 3],
-  imgs: [1],
-  createdAt: 'YYYY-MM-DD hh:mm:ss',
-}));
 
 const initialState = {
-  boardId: 'temp',
+  boardUID: '',
   boardName: '',
   post: {
     posts: [],
-    cnt: 0,
+    count: 0,
   },
+  isLoading: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_BOARD_ID_REQ: {
+    case SET_BOARD_UID: {
       return {
         ...state,
-        boardId: action.data,
+        boardUID: action.data.boardUID,
       };
     }
     case GET_POSTS_REQ: {
       return {
         ...state,
         post: {
-          ...state.board.post,
-          posts: dummyPosts,
+          ...state.post,
         },
+        isLoading: true,
+      };
+    }
+    case GET_POSTS_SUC: {
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          posts: action.data.posts,
+          count: action.data.count,
+        },
+        isLoading: false,
       };
     }
     default: {

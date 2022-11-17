@@ -13,7 +13,6 @@
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "mysql": "^2.18.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.4",
@@ -22,8 +21,7 @@
     "redux": "^4.2.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-saga": "^1.2.1",
-    "shortid": "^2.2.16",
-    "web-vitals": "^2.1.4"
+    "shortid": "^2.2.16"
   },
   "scripts": {
     "start": "cross-env PORT=80 react-scripts start",
@@ -52,8 +50,5 @@
   "devDependencies": {
     "eslint": "^8.26.0",
     "eslint-plugin-react": "^7.31.10"
-  },
-  "optionalDependencies": {
-    "fsevents": "*"
   }
 }

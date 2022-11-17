@@ -19,12 +19,6 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_BOARD_UID: {
-      return {
-        ...state,
-        boardUID: action.data.boardUID,
-      };
-    }
     case GET_POSTS_REQ: {
       return {
         ...state,

@@ -14,7 +14,6 @@ import {
 import axios from 'axios';
 
 function getMenuAPI() {
-  console.log(axios.defaults.baseURL);
   return axios.get('/menu/get');
 }
 function addMenuGroupAPI(data) {

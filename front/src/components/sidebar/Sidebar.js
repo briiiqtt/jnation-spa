@@ -10,7 +10,6 @@ const Sidebar = () => {
   const menus = useSelector((state) => state.menu.menus);
   useEffect(() => {
     dispatch(action_getMenu());
-    console.log(menus);
   }, []);
 
   return (

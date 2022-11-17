@@ -14,6 +14,7 @@ function getPostAPI(data) {
 function* getPosts(action) {
   try {
     const res = yield call(getPostAPI, action.data);
+    console.log(action);
     yield put({
       type: GET_POSTS_SUC,
       data: res.data,

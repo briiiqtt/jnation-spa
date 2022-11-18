@@ -7,7 +7,6 @@ import { action_getMenu } from '../../reducers/menuReducer';
 
 const Sidebar = () => {
   const dispatch = useDispatch();
-  const menus = useSelector((state) => state.menu.menus);
   useEffect(() => {
     dispatch(action_getMenu());
   }, []);
@@ -16,7 +15,7 @@ const Sidebar = () => {
     <>
       <div
         style={{
-          backgroundColor: 'white',
+          backgroundColor: '#FAFAFA',
           // position: 'fixed',
           // top: '1',
           // left: '1',
@@ -30,7 +29,7 @@ const Sidebar = () => {
         className="sidebar"
       >
         <SidebarTitle />
-        <SidebarContent menus={menus} />
+        <SidebarContent />
       </div>
     </>
   );

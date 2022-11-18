@@ -5,9 +5,9 @@ export const LOG_OUT_REQ = 'LOG_OUT_REQ';
 export const LOG_OUT_SUC = 'LOG_OUT_SUC';
 export const LOG_OUT_ERR = 'LOG_OUT_ERR';
 
-export const action_login = (user) => ({
+export const action_login = (data) => ({
   type: LOG_IN_REQ,
-  data: user,
+  data,
 });
 export const action_logout = () => ({
   type: LOG_OUT_REQ,

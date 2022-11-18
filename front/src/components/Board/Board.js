@@ -1,32 +1,47 @@
-import React, { useEffect } from 'react';
+import { Skeleton } from 'antd';
+import Paragraph from 'antd/lib/skeleton/Paragraph';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
-import { action_getPosts } from '../../reducers/boardReducer';
+import {
+  action_getPosts,
+  action_setBoard,
+  action_setPosts,
+} from '../../reducers/boardReducer';
 
 import BoardBar from './BoardBar';
 import BoardBody from './BoardBody';
 import Pagin from './Pagin';
 
-const Board = ({ d }) => {
+const Board = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
-  const boardName = useSelector((state) => state.board.boardName);
-  const postCnt = useSelector((state) => state.board.post.cnt);
-  const posts = useSelector((state) => state.board.post.posts);
-  const { boardUID } = useParams();
+  const page = useSelector((state) => state.board.page);
+  const pageSize = useSelector((state) => state.board.pageSize);
+  const _boardUID = useParams().boardUID;
 
   useEffect(() => {
-    dispatch(action_getPosts(boardUID));
-  }, []);
+    dispatch(action_getPosts({ boardUID: _boardUID, page, pageSize }));
+    dispatch(action_setBoard({ boardUID: _boardUID }));
+
+    return () => {
+      // dispatch(
+      //   action_setPosts({
+      //     post: { posts: [], count: 0 },
+      //   })
+      // );
+    };
+  }, [location]);
 
   return (
     <>
       <div style={{ padding: '20px' }}>
         {/* <MustRead/> */}
-        <BoardBar boardName={boardName} postCnt={postCnt} />
-        <Pagin postCnt={postCnt} />
-        <BoardBody posts={posts} />
-        <Pagin postCnt={postCnt} />
+        <BoardBar />
+        <Pagin />
+        <BoardBody />
+        <Pagin />
       </div>
     </>
   );

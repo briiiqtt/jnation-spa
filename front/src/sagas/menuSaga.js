@@ -39,7 +39,6 @@ function* getMenu() {
   }
 }
 function* addMenuGroup(action) {
-  console.log(action);
   try {
     const res = yield call(addMenuGroupAPI, action.data);
     yield put({

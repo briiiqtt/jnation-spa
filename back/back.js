@@ -22,6 +22,17 @@ app.use(
   })
 );
 
+function sleep(ms) {
+  const wakeUpTime = Date.now() + ms;
+  while (Date.now() < wakeUpTime) {}
+}
+
+app.use((req, res, next) => {
+  console.log(req.path);
+  sleep(500);
+  next();
+});
+
 app.use('/user', userRouter);
 app.use('/menu', menuRouter);
 app.use('/board', boardRouter);

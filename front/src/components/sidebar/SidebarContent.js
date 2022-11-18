@@ -1,12 +1,14 @@
 import { Collapse } from 'antd';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { action_getMenu } from '../../reducers/menuReducer';
 
 const { Panel } = Collapse;
 
-const SidebarContent = ({ menus }) => {
+const SidebarContent = () => {
+  const menus = useSelector((state) => state.menu.menus);
+  const boardUID = useSelector((state) => state.board.uid);
+
   return (
     <>
       <div style={{ padding: '20px' }}>
@@ -34,7 +36,11 @@ const SidebarContent = ({ menus }) => {
                 >
                   <p
                     key={i}
-                    className="menu-inner"
+                    className={
+                      content.uid === boardUID
+                        ? 'menu-inner-active'
+                        : 'menu-inner'
+                    }
                     style={{ cursor: 'pointer' }}
                   >
                     {content.name}

@@ -10,11 +10,11 @@ router.use((req, res, next) => {
 
 router.get('/get-paged-board', async (req, res) => {
   try {
-    const { page, pagePostCnt, boardUID } = req.query;
-    const isSufficient = [page, pagePostCnt, boardUID].every((v) => v ?? false);
+    const { page, pageSize, boardUID } = req.query;
+    const isSufficient = [page, pageSize, boardUID].every((v) => v ?? false);
     if (!isSufficient) throw new InsufficientArgumentError();
 
-    const [num_page, num_pagePostCnt] = [page, pagePostCnt].map((v) => {
+    const [num_page, num_pageSize] = [page, pageSize].map((v) => {
       const val = parseInt(v);
       if (isNaN(val)) {
         throw new InvalidArgumentError();
@@ -23,23 +23,42 @@ router.get('/get-paged-board', async (req, res) => {
       }
     });
 
-    const limitFrom = num_page * num_pagePostCnt;
-    console.log(limitFrom);
+    const limitFrom = num_page === 1 ? 0 : (num_page - 1) * num_pageSize;
 
-    const postQR = await boardModel.get_paged_board(
+    const queryResult_post = await boardModel.get_paged_board(
       limitFrom,
-      num_pagePostCnt,
+      num_pageSize,
       boardUID
     );
-    const countQR = await boardModel.get_board_post_count(boardUID);
-    const count = countQR[0].count;
-    res.send({ posts: postQR, count });
+    const queryResult_total = await boardModel.get_board_post_count(boardUID);
+    const total = queryResult_total[0].total;
+    const queryResult_board_info = await boardModel.get_board_info(boardUID);
+    const { name, ref, uid } = queryResult_board_info[0];
+    res.send({
+      posts: queryResult_post,
+      total,
+      page,
+      boardName: name,
+      ref,
+      boardUID: uid,
+    });
   } catch (e) {
     if (e instanceof InsufficientArgumentError) {
       res.sendStatus(400);
     } else if (e instanceof InvalidArgumentError) {
       res.sendStatus(400);
     } else {
+      console.error(e);
+      res.sendStatus(500);
+    }
+  }
+});
+router.get('/get-all-board-info', async (req, res) => {
+  try {
+    const queryResult = await boardModel.get_all_board_info();
+    res.send({ ...queryResult });
+  } catch (e) {
+    if (e) {
       console.error(e);
       res.sendStatus(500);
     }

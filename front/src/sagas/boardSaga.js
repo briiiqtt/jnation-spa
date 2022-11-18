@@ -8,13 +8,12 @@ import {
 import axios from 'axios';
 
 function getPostAPI(data) {
-  return axios.post('/board/get-paged-board', data);
+  return axios.get('/board/get-paged-board', { params: data });
 }
 
 function* getPosts(action) {
   try {
     const res = yield call(getPostAPI, action.data);
-    console.log(action);
     yield put({
       type: GET_POSTS_SUC,
       data: res.data,
@@ -32,6 +31,6 @@ function* watchGetPosts() {
   yield takeLatest(GET_POSTS_REQ, getPosts);
 }
 
-export default function* userSaga() {
+export default function* boardSaga() {
   yield all([fork(watchGetPosts)]);
 }

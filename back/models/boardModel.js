@@ -1,3 +1,4 @@
+const { shortid } = require('./db');
 const db = require('./db');
 
 const boardModel = {
@@ -41,6 +42,28 @@ const boardModel = {
     and type = 'board'
     `;
     const params = [];
+    return db.query(sql, params);
+  },
+  async add_post(uid, boardUID, title, content, authorUID) {
+    let sql = `
+    insert into
+      post(
+        uid,
+        idx,
+        board_uid,
+        title,
+        content,
+        author_uid
+      ) values (
+        ?,
+        next_val('post'),
+        ?,
+        ?,
+        ?,
+        ?
+      )
+    `;
+    const params = [uid, boardUID, title, content, authorUID];
     return db.query(sql, params);
   },
 };

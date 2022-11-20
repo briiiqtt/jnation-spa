@@ -1,16 +1,20 @@
 import { Pagination } from 'antd';
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { action_getPosts } from '../../reducers/boardReducer';
 
 const Pagin = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const boardUID = useSelector((state) => state.board.uid);
   const postTotal = useSelector((state) => state.board.post.total);
-  const pageSize = useSelector((state) => state.board.pageSize);
   const page = useSelector((state) => state.board.page);
-  const onPageChange = useCallback((page, pageSize) => {
-    dispatch(action_getPosts({ page, pageSize, boardUID }));
+  const onPageChange = useCallback((page) => {
+    // history.pushState(null, null, `/board/${boardUID}/${page}`);
+    // const popStateEvent = new PopStateEvent('popstate');
+    // dispatchEvent(popStateEvent);
+    navigate(`/board/${boardUID}/${page}`);
   });
   return (
     <>
@@ -20,8 +24,7 @@ const Pagin = () => {
           total={postTotal}
           showSizeChanger={false}
           showQuickJumper={false}
-          pageSize={pageSize}
-          onChange={(page, pageSize) => onPageChange(page, pageSize)}
+          onChange={(page) => onPageChange(page)}
         />
       </div>
     </>

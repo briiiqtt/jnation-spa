@@ -17,13 +17,13 @@ import Pagin from './Pagin';
 const Board = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const page = useSelector((state) => state.board.page);
-  const pageSize = useSelector((state) => state.board.pageSize);
-  const _boardUID = useParams().boardUID;
+  // const page = useSelector((state) => state.board.page);
+  const boardUID = useParams().boardUID;
+  const page = useParams().page;
 
   useEffect(() => {
-    dispatch(action_getPosts({ boardUID: _boardUID, page, pageSize }));
-    dispatch(action_setBoard({ boardUID: _boardUID }));
+    dispatch(action_setBoard({ boardUID }));
+    dispatch(action_getPosts({ page: page || 1, boardUID }));
 
     return () => {
       // dispatch(

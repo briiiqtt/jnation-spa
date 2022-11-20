@@ -4,13 +4,16 @@ import {
   EyeFilled,
 } from '@ant-design/icons';
 import { Avatar, List, Skeleton } from 'antd';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
 const BoardBody = () => {
   const posts = useSelector((state) => state.board.post.posts);
   const isLoading = useSelector((state) => state.board.isLoading);
 
+  const onListItemClick = useCallback((uid) => {
+    alert(uid);
+  });
   return (
     <List
       className="demo-loadmore-list"
@@ -18,6 +21,7 @@ const BoardBody = () => {
       dataSource={posts}
       renderItem={(item, i) => (
         <List.Item
+          onClick={() => onListItemClick(item.uid)}
           actions={[
             <>
               <EyeFilled />

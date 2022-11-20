@@ -7,9 +7,9 @@ export const action_setTempPost = (data) => ({
 
 const initialState = {
   tempPost: {
-    boardUID: '',
-    title: '',
-    content: '',
+    boardUID: null,
+    title: null,
+    content: null,
   },
 };
 
@@ -22,9 +22,12 @@ const reducer = (state = initialState, action) => {
           ...state.tempPost,
         },
       };
-      if (action.data.title) _state.tempPost.title = action.data.title;
-      if (action.data.content) _state.tempPost.content = action.data.content;
-      if (action.data.boardUID) _state.tempPost.boardUID = action.data.boardUID;
+      if (action.data.title !== undefined)
+        _state.tempPost.title = action.data.title;
+      if (action.data.content !== undefined)
+        _state.tempPost.content = action.data.content;
+      if (action.data.boardUID !== undefined)
+        _state.tempPost.boardUID = action.data.boardUID;
       return _state;
     }
     default: {

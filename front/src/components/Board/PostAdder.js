@@ -1,10 +1,25 @@
 import { Button, Input, Select } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import {
+  action_addPost,
+  action_setAddedPostUID,
+  ADD_POST_SUC,
+} from '../../reducers/boardReducer';
 import { action_setTempPost } from '../../reducers/etcReducer';
 
 const PostAdder = () => {
+  const dispatch = useDispatch();
+  const tempBoardUID = useSelector((state) => state.etc.tempPost.boardUID);
+  const tempTitle = useSelector((state) => state.etc.tempPost.title);
+  const tempContent = useSelector((state) => state.etc.tempPost.content);
+  const myUID = useSelector((state) => state.user.me.uid);
+  const isAddingPost = useSelector((state) => state.board.isAddingPost);
+  const addedPostUID = useSelector((state) => state.board.addedPostUID);
+  const navigate = useNavigate();
+
   const tempArr = [];
   useSelector((state) => state.menu.menus).forEach((menu) =>
     menu.contents.forEach(
@@ -12,7 +27,7 @@ const PostAdder = () => {
     )
   );
   const options = tempArr.map((v) => ({ value: v.uid, label: v.name }));
-  const dispatch = useDispatch();
+
   const onSelectChange = useCallback((e) => {
     dispatch(action_setTempPost({ boardUID: e }));
   });
@@ -22,12 +37,57 @@ const PostAdder = () => {
   const onTextChange = useCallback((e) => {
     dispatch(action_setTempPost({ content: e.target.value }));
   });
-  const tempTitle = useSelector((state) => state.etc.tempPost.title);
-  const tempContent = useSelector((state) => state.etc.tempPost.content);
 
   const onSubmit = useCallback(() => {
-    console.log(tempTitle, tempContent);
+    dispatch(
+      action_addPost({
+        boardUID: tempBoardUID,
+        title: tempTitle,
+        content: tempContent,
+        authorUID: myUID,
+      })
+    );
   });
+
+  useEffect(() => {
+    if (tempBoardUID || tempTitle || tempContent) {
+      const keepPosting = confirm(
+        '작성중이던 글이 있습니다. 불러오시겠습니까?'
+      );
+      if (keepPosting) {
+        // if (tempBoardUID)
+        //   document.querySelector('#select-board-uid').value = tempBoardUID;
+        // if (tempTitle) document.querySelector('#input-title').value = tempTitle;
+        // if (tempContent)
+        //   document.querySelector('#textarea-content').value = tempContent;
+      } else {
+        dispatch(
+          action_setTempPost({
+            boardUID: null,
+            title: null,
+            content: null,
+          })
+        );
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (addedPostUID) {
+      /**
+       *
+       *
+       *
+       *setaddedpostuid 초기화해줘야된다 잠온다 일단 자자
+       *
+       *
+       *
+       */
+      action_setAddedPostUID({ addedPostUID: null });
+      navigate(`/board/post/${addedPostUID}`);
+    }
+  }, [addedPostUID]);
+
   return (
     <>
       <div style={{ padding: '30px' }}>
@@ -45,6 +105,7 @@ const PostAdder = () => {
             options={options}
             style={{ width: '380px' }}
             onChange={onSelectChange}
+            value={tempBoardUID}
           ></Select>
           <Input
             placeholder="글 제목을 입력하세요."
@@ -62,6 +123,7 @@ const PostAdder = () => {
           placeholder="WYSIWYG 추가 예정"
           onChange={onTextChange}
           value={tempContent}
+          id="textarea-content"
         />
       </div>
       <div style={{ padding: '20px 40px', fontSize: '0.8rem' }}>
@@ -85,6 +147,7 @@ const PostAdder = () => {
             height: '40px',
           }}
           onClick={onSubmit}
+          loading={isAddingPost}
         >
           저장
         </Button>

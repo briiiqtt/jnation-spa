@@ -45,6 +45,13 @@ const initialState = {
   isLoading: false,
   isAddingPost: false,
   addedPostUID: null,
+  currentPost: {
+    uid: null,
+    boardUID: null,
+    title: null,
+    content: null,
+    authorUID: null,
+  },
 };
 
 const reducer = (state = initialState, action) => {

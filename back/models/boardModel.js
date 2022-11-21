@@ -4,11 +4,26 @@ const db = require('./db');
 const boardModel = {
   async get_paged_board(limitFrom, pagePostCount, boardUID) {
     let sql = `
-    select uid, board_uid, title, content, view_count, author_uid, created_at, updated_at
-    from post
-    where deleted_at is null
-    and board_uid = ?
-    order by created_at desc
+    select 
+      p.uid,
+      p.board_uid,
+      p.title,
+      p.content,
+      p.view_count,
+      p.author_uid,
+      date_format(p.created_at, '%Y-%m-%d %h:%i:%s') "post_created_at",
+      p.updated_at,
+      u.uid,
+      u.id,
+      u.nickname,
+      u.auth,
+      u.created_at "user_created_at"
+    from post p
+    join user u
+    on p.author_uid = u.uid
+    where p.deleted_at is null
+    and p.board_uid = ?
+    order by p.created_at desc
     limit ?,?
     `;
     const params = [boardUID, limitFrom, pagePostCount];

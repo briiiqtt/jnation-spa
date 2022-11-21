@@ -35,7 +35,6 @@ router.get('/:boardUID/:page', async (req, res) => {
     const queryResult_total = await boardModel.get_board_post_count(boardUID);
     const total = queryResult_total[0].total;
     const queryResult_board_info = await boardModel.get_board_info(boardUID);
-    console.log(queryResult_board_info);
     const { name, ref, uid } = queryResult_board_info[0];
     res.send({
       posts: queryResult_post,

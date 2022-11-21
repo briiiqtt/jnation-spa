@@ -16,7 +16,7 @@ const SidebarContent = () => {
           style={{ padding: '10px', cursor: 'pointer' }}
           className="ant-collapse-header"
         >
-          전체 글
+          <b>전체 글</b>
         </div>
         <Collapse
           activeKey={menus.map((menu) => menu.uid)}

@@ -4,15 +4,47 @@ import {
   EyeFilled,
 } from '@ant-design/icons';
 import { Avatar, List, Skeleton } from 'antd';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 const BoardBody = () => {
   const posts = useSelector((state) => state.board.post.posts);
   const isLoading = useSelector((state) => state.board.isLoading);
 
+  const [now, setNow] = useState(() => new Date());
+
+  // useEffect(() => {
+  //   console.log(now);
+  //   setNow(new Date());
+  // }, [now]);
+  /**
+   *
+   *
+   *
+   *
+   *
+   */
+
   const onListItemClick = useCallback((uid) => {
     alert(uid);
+  });
+  const getTimeStamp = useCallback((date) => {
+    const now = new Date();
+    const createdAt = new Date(date);
+    if (now - 1000 * 60 * 60 * 24 < createdAt) {
+      const secs = (now - createdAt) / 1000;
+      const mins = secs / 60;
+      const hours = mins / 24;
+      return secs <= 60
+        ? `${Math.floor(secs)}초 전`
+        : mins <= 60
+        ? `${Math.floor(mins)}분 전`
+        : `${Math.floor(hours)}시간 전`;
+    } else {
+      return `${createdAt.getFullYear()}. ${
+        createdAt.getMonth() + 1
+      }. ${createdAt.getDate()}`;
+    }
   });
   return (
     <List
@@ -53,7 +85,8 @@ const BoardBody = () => {
               title={<div>{item.title}</div>}
               description={
                 <div>
-                  {item.author_uid}&emsp;|&emsp;{item.created_at}
+                  {item.nickname}&emsp;|&emsp;
+                  {getTimeStamp(item.post_created_at)}
                 </div>
               }
             />

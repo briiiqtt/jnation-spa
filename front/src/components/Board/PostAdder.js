@@ -74,16 +74,10 @@ const PostAdder = () => {
 
   useEffect(() => {
     if (addedPostUID) {
-      /**
-       *
-       *
-       *
-       *setaddedpostuid 초기화해줘야된다 잠온다 일단 자자
-       *
-       *
-       *
-       */
-      action_setAddedPostUID({ addedPostUID: null });
+      dispatch(
+        action_setTempPost({ boardUID: null, title: null, content: null })
+      );
+      dispatch(action_setAddedPostUID({ addedPostUID: null }));
       navigate(`/board/post/${addedPostUID}`);
     }
   }, [addedPostUID]);

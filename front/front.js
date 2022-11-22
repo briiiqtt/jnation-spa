@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.get('*', (req, res) => {
   console.log(req.path);
-  res.sendFile(`${__dirname}/build/app.html`);
+  res.sendFile(`${__dirname}/build/index.html`);
 });
 
 app.listen((port = 80), async () => {

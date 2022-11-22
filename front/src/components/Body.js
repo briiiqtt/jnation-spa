@@ -1,15 +1,9 @@
 import React from 'react';
 
-const Body = ({ children, noPadding = false }) => {
+const Body = ({ children }) => {
   return (
     <>
-      <div style={{ width: '860px' }}>
-        {noPadding ? (
-          <div style={{ padding: '20px' }}>{children}</div>
-        ) : (
-          children
-        )}
-      </div>
+      <div style={{ width: '860px' }}>{children}</div>
     </>
   );
 };

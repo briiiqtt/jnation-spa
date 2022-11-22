@@ -84,7 +84,7 @@ const PostAdder = () => {
 
   return (
     <>
-      <div style={{ padding: '30px' }}>
+      <div style={{ padding: '30px 28px' }}>
         <div style={{ fontWeight: 'bold' }}>글쓰기</div>
         <div
           style={{

@@ -6,46 +6,26 @@ import {
 import { Avatar, List, Skeleton } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { getTimeStamp } from '../common';
 
 const BoardBody = () => {
   const posts = useSelector((state) => state.board.post.posts);
   const isLoading = useSelector((state) => state.board.isLoading);
+  const navigate = useNavigate();
 
   const [now, setNow] = useState(() => new Date());
 
-  // useEffect(() => {
-  //   console.log(now);
-  //   setNow(new Date());
-  // }, [now]);
-  /**
-   *
-   *
-   *
-   *
-   *
-   */
+  useEffect(() => {
+    setInterval(() => {
+      setNow(new Date());
+    }, 900);
+  }, []);
 
   const onListItemClick = useCallback((uid) => {
-    alert(uid);
+    navigate(`/board/post/${uid}`);
   });
-  const getTimeStamp = useCallback((date) => {
-    const now = new Date();
-    const createdAt = new Date(date);
-    if (now - 1000 * 60 * 60 * 24 < createdAt) {
-      const secs = (now - createdAt) / 1000;
-      const mins = secs / 60;
-      const hours = mins / 24;
-      return secs <= 60
-        ? `${Math.floor(secs)}초 전`
-        : mins <= 60
-        ? `${Math.floor(mins)}분 전`
-        : `${Math.floor(hours)}시간 전`;
-    } else {
-      return `${createdAt.getFullYear()}. ${
-        createdAt.getMonth() + 1
-      }. ${createdAt.getDate()}`;
-    }
-  });
+
   return (
     <List
       className="demo-loadmore-list"
@@ -53,7 +33,7 @@ const BoardBody = () => {
       dataSource={posts}
       renderItem={(item, i) => (
         <List.Item
-          onClick={() => onListItemClick(item.uid)}
+          onClick={() => onListItemClick(item.post_uid)}
           actions={[
             <>
               <EyeFilled />
@@ -69,7 +49,7 @@ const BoardBody = () => {
         >
           <Skeleton
             active
-            key={item.uid}
+            key={item.post_uid}
             avatar={{ shape: 'square' }}
             title={false}
             paragraph={{ rows: 2, width: ['50%', '35%'] }}

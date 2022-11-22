@@ -6,6 +6,7 @@ import NotificDropdown from './NotificDropdown';
 import ProfileDropdown from './ProfileDropdown';
 
 import { action_login, action_logout } from '../../reducers/userReducer';
+import { useNavigate } from 'react-router-dom';
 
 const HeaderButtons = () => {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
@@ -112,10 +113,14 @@ const HeaderButtons = () => {
       </span>
     </>
   );
+  const navigate = useNavigate();
+  const onPenButton = useCallback(() => {
+    navigate(`/board/post/add`);
+  });
 
   const loggedIn = (
     <>
-      <span style={iconStyle}>
+      <span style={iconStyle} onClick={onPenButton}>
         <EditFilled />
       </span>
       <span style={iconStyle}>

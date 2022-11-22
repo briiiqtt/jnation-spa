@@ -41,7 +41,6 @@ router.get('/is_avail_id', async (req, res) => {
     if (!isSufficient) throw new InsufficientArgumentError();
 
     const qr = await userModel.get_uid_by_id(id);
-    console.log(qr);
     let bool = qr.length === 0;
     res.send(bool);
   } catch (e) {
@@ -56,7 +55,6 @@ router.get('/is_avail_id', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { id, pw } = req.body;
-    console.log(id, pw);
     const isSufficient = [id, pw].every((v) => v ?? false);
     if (!isSufficient) throw new InsufficientArgumentError();
 

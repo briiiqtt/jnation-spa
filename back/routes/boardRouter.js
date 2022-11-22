@@ -9,10 +9,61 @@ router.use((req, res, next) => {
   next();
 });
 
+router.get('/get-all-board-info', async (req, res) => {
+  try {
+    const queryResult = await boardModel.get_all_board_info();
+    res.send({ ...queryResult });
+  } catch (e) {
+    if (e) {
+      console.error(e);
+      res.sendStatus(500);
+    }
+  }
+});
+router.post('/post/add', async (req, res) => {
+  try {
+    const { boardUID, title, content, authorUID } = req.body;
+    const isSufficient = [boardUID, title, content, authorUID].every(
+      (v) => v ?? false
+    );
+    if (!isSufficient) throw new InsufficientArgumentError();
+
+    const uid = shortid.generate();
+
+    const queryResult = await boardModel.add_post(
+      uid,
+      boardUID,
+      title,
+      content,
+      authorUID
+    );
+    res.send({ affectedRows: queryResult.affectedRows, uid });
+  } catch (e) {
+    if (e) {
+      console.error(e);
+      res.sendStatus(500);
+    }
+  }
+});
+router.get('/post/:postUID', async (req, res) => {
+  try {
+    const { postUID } = req.params;
+    const isSufficient = [postUID].every((v) => v ?? false);
+    if (!isSufficient) throw new InsufficientArgumentError();
+
+    const queryResult = await boardModel.get_post(postUID);
+    res.send({ currentPost: queryResult[0] });
+  } catch (e) {
+    if (e) {
+      console.error(e);
+      res.sendStatus(500);
+    }
+  }
+});
 router.get('/:boardUID/:page', async (req, res) => {
   const pageSize = 10;
   try {
-    const { page, boardUID } = req.query;
+    const { page, boardUID } = req.params;
     const isSufficient = [page, boardUID].every((v) => v ?? false);
     if (!isSufficient) throw new InsufficientArgumentError();
 
@@ -50,42 +101,6 @@ router.get('/:boardUID/:page', async (req, res) => {
     } else if (e instanceof InvalidArgumentError) {
       res.sendStatus(400);
     } else {
-      console.error(e);
-      res.sendStatus(500);
-    }
-  }
-});
-router.get('/get-all-board-info', async (req, res) => {
-  try {
-    const queryResult = await boardModel.get_all_board_info();
-    res.send({ ...queryResult });
-  } catch (e) {
-    if (e) {
-      console.error(e);
-      res.sendStatus(500);
-    }
-  }
-});
-router.post('/post/add', async (req, res) => {
-  try {
-    const { boardUID, title, content, authorUID } = req.body;
-    const isSufficient = [boardUID, title, content, authorUID].every(
-      (v) => v ?? false
-    );
-    if (!isSufficient) throw new InsufficientArgumentError();
-
-    const uid = shortid.generate();
-
-    const queryResult = await boardModel.add_post(
-      uid,
-      boardUID,
-      title,
-      content,
-      authorUID
-    );
-    res.send({ affectedRows: queryResult.affectedRows, uid });
-  } catch (e) {
-    if (e) {
       console.error(e);
       res.sendStatus(500);
     }

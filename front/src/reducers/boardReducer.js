@@ -144,19 +144,9 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        currentPost: {
-          ...state.currentPost,
-          uid: action.data.currentPost.uid,
-          title: action.data.currentPost.title,
-          content: action.data.currentPost.content,
-          createdAt: action.data.currentPost.created_at,
-          viewCount: action.data.currentPost.view_count,
-          authorUID: action.data.currentPost.author_uid,
-          authorNickname: action.data.currentPost.author_nickname,
-          authorAuth: action.data.currentPost.author_auth,
-        },
-        uid: action.data.currentPost.board_uid,
-        name: action.data.currentPost.board_name,
+        currentPost: action.data.currentPost,
+        uid: action.data.currentPost.boardUID,
+        name: action.data.currentPost.boardName,
       };
     }
     case GET_POST_ERR: {

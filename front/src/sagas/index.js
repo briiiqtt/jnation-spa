@@ -5,6 +5,7 @@ import axios from 'axios';
 import userSaga from './userSaga';
 import menuSaga from './menuSaga';
 import boardSaga from './boardSaga';
+import etcSaga from './etcSaga';
 
 axios.defaults.baseURL =
   process.env.NODE_ENV === 'development'
@@ -12,5 +13,5 @@ axios.defaults.baseURL =
     : `http://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}`;
 
 export default function* rootSaga() {
-  yield all([fork(userSaga), fork(menuSaga), fork(boardSaga)]);
+  yield all([fork(userSaga), fork(menuSaga), fork(boardSaga), fork(etcSaga)]);
 }

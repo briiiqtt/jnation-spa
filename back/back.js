@@ -29,7 +29,7 @@ function sleep(ms) {
 
 app.use((req, res, next) => {
   console.log(req.path);
-  sleep(500);
+  // sleep(1000);
   next();
 });
 

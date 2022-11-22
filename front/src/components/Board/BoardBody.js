@@ -33,23 +33,23 @@ const BoardBody = () => {
       dataSource={posts}
       renderItem={(item, i) => (
         <List.Item
-          onClick={() => onListItemClick(item.post_uid)}
+          onClick={() => onListItemClick(item.postUID)}
           actions={[
             <>
               <EyeFilled />
               &nbsp;
-              {isLoading ? 0 : item.view_count || 0}
+              {isLoading ? 0 : item.viewCount}
             </>,
             <>
               <CommentOutlined />
               &nbsp;
-              {isLoading ? 0 : item.comment_count || 0}
+              {isLoading ? 0 : item.commentCount}
             </>,
           ]}
         >
           <Skeleton
             active
-            key={item.post_uid}
+            key={item.postUID}
             avatar={{ shape: 'square' }}
             title={false}
             paragraph={{ rows: 2, width: ['50%', '35%'] }}
@@ -65,8 +65,8 @@ const BoardBody = () => {
               title={<div>{item.title}</div>}
               description={
                 <div>
-                  {item.nickname}&emsp;|&emsp;
-                  {getTimeStamp(item.post_created_at)}
+                  {item.authorNickname}&emsp;|&emsp;
+                  {getTimeStamp(item.postCreatedAt, now)}
                 </div>
               }
             />

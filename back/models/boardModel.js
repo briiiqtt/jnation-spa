@@ -5,19 +5,17 @@ const boardModel = {
   async get_paged_board(limitFrom, pagePostCount, boardUID) {
     let sql = `
     select 
-      p.uid "post_uid",
-      p.board_uid,
-      p.title,
-      p.content,
-      p.view_count,
-      p.author_uid,
-      date_format(p.created_at, '%Y-%m-%d %h:%i:%s') "post_created_at",
-      p.updated_at,
-      u.uid "user_uid",
-      u.id "user_id",
-      u.nickname "user_nickname",
-      u.auth "user_auth",
-      u.created_at "user_created_at"
+      p.uid "postUID",
+      p.board_uid "boardUID",
+      p.title "title",
+      p.content "content",
+      p.view_count "viewCount",
+      p.author_uid "authorUID",
+      date_format(p.created_at, '%Y-%m-%d %h:%i:%s') "postCreatedAt",
+      p.updated_at "updatedAt",
+      u.nickname "authorNickname",
+      u.auth "authorAuth",
+      u.created_at "authorCreatedAt"
     from post p
     join user u
     on p.author_uid = u.uid
@@ -84,18 +82,19 @@ const boardModel = {
   async get_post(postUID) {
     let sql = `
     select
-      p.uid,
-      p.idx,
-      p.board_uid,
-      p.title,
-      p.content,
-      p.view_count,
-      p.author_uid,
-      date_format(p.created_at, '%Y-%m-%d %h:%i:%s') "created_at",
-      p.updated_at,
-      mc.name "board_name",
-      u.nickname "author_nickname",
-      u.auth "author_auth"
+      p.uid "uid",
+      p.idx "idx",
+      p.board_uid "boardUID",
+      p.title "title",
+      p.content "content",
+      p.view_count "viewCount",
+      p.author_uid "authorUID",
+      date_format(p.created_at, '%Y-%m-%d %h:%i:%s') "createdAt",
+      p.updated_at "updatedAt",
+      mc.name "boardName",
+      u.nickname "authorNickname",
+      u.auth "authorAuth",
+      u.created_at "authorCreatedAt"
     from post p
     join menu_content mc
     on mc.uid = p.board_uid

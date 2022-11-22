@@ -49,6 +49,15 @@ const userModel = {
     const params = [id, pw];
     return db.query(sql, params);
   },
+  async getUserTotal() {
+    const sql = `
+    select count(*) "userTotal"
+    from user
+    where deleted_at is null
+    `;
+    const params = [];
+    return db.query(sql, params);
+  },
 };
 
 module.exports = userModel;

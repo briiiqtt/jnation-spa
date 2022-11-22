@@ -19,28 +19,41 @@ const PCLayout = () => {
           style={{
             display: 'flex',
             justifyContent: 'center',
-            height: `calc(100vh - 58px)`,
-            overflowY: 'scroll',
-            msOverflowStyle: 'none',
+            height: 'calc(100vh - 58px)',
           }}
         >
+          <LeftBanner />
           <Sidebar />
-          <Body>
-            <Routes>
-              <Route path="/manage" element={<MenuManager />}></Route>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              height: `calc(100vh - 58px)`,
+              overflowY: 'scroll',
+              msOverflowStyle: 'none',
+            }}
+          >
+            <Body>
+              <Routes>
+                <Route path="/manage" element={<MenuManager />}></Route>
 
-              <Route path="/board/:boardUID" element={<Board />}></Route>
-              <Route path="/board/:boardUID/:page" element={<Board />}></Route>
+                <Route path="/board/:boardUID" element={<Board />}></Route>
+                <Route
+                  path="/board/:boardUID/:page"
+                  element={<Board />}
+                ></Route>
 
-              <Route path="/board/post/add" element={<PostAdder />}></Route>
-              <Route
-                path="/board/post/:postUID"
-                element={<PostViewer />}
-              ></Route>
+                <Route path="/board/post/add" element={<PostAdder />}></Route>
+                <Route
+                  path="/board/post/:postUID"
+                  element={<PostViewer />}
+                ></Route>
 
-              <Route path="*" element={<NotFound />}></Route>
-            </Routes>
-          </Body>
+                <Route path="*" element={<NotFound />}></Route>
+              </Routes>
+            </Body>
+          </div>
+          <RightBanner />
         </div>
       </BrowserRouter>
     </>
@@ -48,3 +61,41 @@ const PCLayout = () => {
 };
 
 export default PCLayout;
+
+const LeftBanner = () => {
+  return (
+    <div
+      style={{
+        width: 'calc((100vw - 1144px + 6px)/2)', //+6px은 스크롤바 width건드린거땜에
+        display: 'flex',
+        flexDirection: 'row-reverse',
+        overflow: 'hidden',
+        // backgroundImage: `url("https://sgimage.netmarble.com/images/netmarble/enn/20220728/bhst1658997251182.jpg")`,
+      }}
+    >
+      <img
+        style={{ objectFit: 'none', objectPosition: 'right top' }}
+        src="https://sgimage.netmarble.com/images/netmarble/enn/20220728/bhst1658997251182.jpg"
+      ></img>
+    </div>
+  );
+};
+
+const RightBanner = () => {
+  return (
+    <div
+      style={{
+        width: 'calc((100vw - 1144px + 6px)/2)',
+        display: 'flex',
+        flexDirection: 'row',
+        overflow: 'hidden',
+        // backgroundImage: `url("https://sgimage.netmarble.com/images/netmarble/enn/20220728/bhst1658997251182.jpg")`,
+      }}
+    >
+      <img
+        style={{ objectFit: 'none', objectPosition: 'left top' }}
+        src="https://sgimage.netmarble.com/images/netmarble/enn/20220728/qjsp1658997256535.jpg"
+      ></img>
+    </div>
+  );
+};

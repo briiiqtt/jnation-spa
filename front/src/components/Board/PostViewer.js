@@ -1,20 +1,18 @@
-import { EyeFilled } from '@ant-design/icons';
+import { Avatar, Skeleton } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { action_getPost } from '../../reducers/boardReducer';
-import { getDefaultTimeStamp } from '../common';
-import NicknameBadge from '../user/NicknameBadge';
+import { graySpin, TextLoading } from '../common';
+import ProfileCard from '../user/ProfileCard';
+import PostTitle from './PostTitle';
 
 const PostViewer = () => {
   const dispatch = useDispatch();
   const postUID = useParams().postUID;
   const boardName = useSelector((state) => state.board.name);
   const currentPost = useSelector((state) => state.board.currentPost);
-  // const authorAuth = useSelector((state) => state.board.currentPost.authorAuth);
-  // const authorNickname = useSelector(
-  //   (state) => state.board.currentPost.authorNickname
-  // );
+  const isLoading = useSelector((state) => state.board.isLoading);
 
   useEffect(() => {
     dispatch(action_getPost({ postUID }));
@@ -22,43 +20,60 @@ const PostViewer = () => {
   return (
     <>
       <div style={{ padding: '30px 28px' }}>
-        <div
-          style={{ paddingBottom: '14px', borderBottom: '1px solid #A0A0A1' }}
-        >
-          <span>{boardName}</span>
-        </div>
-        <div style={{ padding: '0px 28px' }}>
+        <Skeleton active loading={isLoading} paragraph={{ rows: 10 }}>
           <div
-            style={{
-              fontSize: '1.75rem',
-              paddingTop: '10px',
-              fontWeight: 'bold',
-            }}
+            style={{ paddingBottom: '14px', borderBottom: '1px solid #A0A0A1' }}
           >
-            {currentPost.title}
+            <span>{boardName}</span>
           </div>
-          <div
-            style={{
-              padding: '1px 0px 10px',
-              borderBottom: '1px solid #f0f0f3',
-            }}
-          >
-            <NicknameBadge
-              auth={currentPost.authorAuth}
-              name={currentPost.authorNickname}
-            ></NicknameBadge>
-            <span style={{ color: '#959595' }}>
-              &emsp;|&emsp;
-              <span>{getDefaultTimeStamp(currentPost.createdAt)}</span>
-              &emsp;|&emsp;
-              <span>
-                <EyeFilled />
-                &nbsp;
-                {currentPost.viewCount}
-              </span>
-            </span>
+          <div style={{ padding: '0px 28px' }}>
+            <PostTitle />
+            <div
+              style={{
+                padding: '30px 0px 80px',
+                borderBottom: '1px solid #f0f0f3',
+              }}
+            >
+              {currentPost.content}
+            </div>
+            <Emotions />
+            <ProfileCard />
           </div>
+        </Skeleton>
+      </div>
+    </>
+  );
+};
+
+const Emotions = () => {
+  return (
+    <>
+      <div style={{ padding: '30px 0px 45px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Emotion emoji="🥰" />
+          <Emotion emoji="🤣" />
+          <Emotion emoji="😭" />
+          <Emotion emoji="😡" />
         </div>
+      </div>
+    </>
+  );
+};
+
+const Emotion = ({ emoji, isLoading = false }) => {
+  const count = 0;
+  return (
+    <>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <a style={{ fontSize: '3rem', margin: '0px 10px' }}>{emoji}</a>
+        <div>{isLoading ? graySpin() : count}</div>
       </div>
     </>
   );

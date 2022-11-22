@@ -9,7 +9,7 @@ const Logo = () => {
         cursor: 'pointer',
         position: 'absolute',
         zIndex: 2,
-        right: '140px',
+        right: '137px',
         top: '5px',
       }}
     >

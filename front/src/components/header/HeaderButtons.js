@@ -18,7 +18,7 @@ const HeaderButtons = () => {
     bottom: '8px',
     color: '#ffffff',
     // padding: '5px',
-    margin: '0px 20px',
+    margin: '0px 15px',
     cursor: 'pointer',
   }));
   const outerSpanStyle = useMemo(() => ({

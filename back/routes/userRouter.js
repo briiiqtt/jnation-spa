@@ -75,5 +75,20 @@ router.post('/login', async (req, res) => {
     }
   }
 });
+router.get('/total', async (req, res) => {
+  try {
+    const qr = await userModel.getUserTotal();
+    res.send(qr[0]);
+  } catch (e) {
+    if (e instanceof InsufficientArgumentError) {
+      res.sendStatus(400);
+    } else if (e instanceof LoginFailedError) {
+      res.sendStatus(404);
+    } else {
+      console.error(e);
+      res.sendStatus(500);
+    }
+  }
+});
 
 module.exports = router;

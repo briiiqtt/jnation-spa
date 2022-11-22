@@ -12,6 +12,7 @@ const Searchbar = () => {
           justifyContent: 'center',
           alignItems: 'center',
           width: '460px',
+          // height: '36px',
         }}
       >
         <Search
@@ -20,7 +21,6 @@ const Searchbar = () => {
           enterButton={<SearchOutlined />}
           size="large"
           //   onSearch={onSearch}
-          style={{ backgroundColor: '#827d7d' }}
         />
       </span>
       <span style={{ width: '112px' }}></span>

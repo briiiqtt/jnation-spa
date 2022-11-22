@@ -51,3 +51,21 @@
   border-radius: 10px;
   box-shadow: inset 0px 0px 5px white;
 }
+
+.ant-input-affix-wrapper-lg {
+  background-color: #827d7d;
+  height: 36px;
+}
+.ant-input-lg {
+  background-color: #827d7d;
+}
+.ant-input-search-button {
+  background-color: #00b5ee;
+  width: 66px;
+}
+.ant-input-search-button > span {
+  font-size: 1.25rem;
+}
+.ant-input-search-button {
+  height: 36px !important;
+}

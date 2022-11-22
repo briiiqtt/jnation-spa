@@ -8,9 +8,9 @@ app.use(express.static(path.join(__dirname, `build`)));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get('/main', (req, res) => {
-  console.log('/main');
-  res.sendFile(`${__dirname}/build/index.html`);
+app.get('*', (req, res) => {
+  console.log(req.path);
+  res.sendFile(`${__dirname}/build/app.html`);
 });
 
 app.listen((port = 80), async () => {

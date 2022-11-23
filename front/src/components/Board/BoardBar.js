@@ -1,4 +1,4 @@
-import { EditOutlined, HomeOutlined, LoadingOutlined } from '@ant-design/icons';
+import { EditOutlined, HomeFilled, RightOutlined } from '@ant-design/icons';
 import { Breadcrumb, Button } from 'antd';
 import React, { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
@@ -14,16 +14,36 @@ const BoardBar = () => {
     <>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
-          <Breadcrumb separator=">">
+          <Breadcrumb
+            separator={
+              <RightOutlined
+                style={{
+                  ...fontSize(18),
+                  top: '30px',
+                  position: 'relative',
+                  top: '4px',
+                }}
+              />
+            }
+          >
             <Breadcrumb.Item>
-              <HomeOutlined style={{ ...fontSize(18), top: '30px' }} />
+              <HomeFilled
+                style={{
+                  ...fontSize(18),
+                  top: '30px',
+                  position: 'relative',
+                  top: '4px',
+                }}
+              />
             </Breadcrumb.Item>
             <Breadcrumb.Item>
               {isLoading ? (
                 spin
               ) : (
                 <>
-                  <span style={fontSize(18)}>{boardName}</span>
+                  <span style={{ ...fontSize(18), fontWeight: 'bold' }}>
+                    {boardName}
+                  </span>&nbsp;
                   <span style={{ ...fontSize(15), color: 'gray' }}>
                     {`(${postTotal})`}
                   </span>

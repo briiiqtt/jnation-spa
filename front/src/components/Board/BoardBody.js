@@ -8,6 +8,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getTimeStamp } from '../common';
+import NicknameBadge from '../user/NicknameBadge';
 
 const BoardBody = () => {
   const posts = useSelector((state) => state.board.post.posts);
@@ -31,8 +32,10 @@ const BoardBody = () => {
       className="demo-loadmore-list"
       itemLayout="horizontal"
       dataSource={posts}
+      size="large"
       renderItem={(item, i) => (
         <List.Item
+          style={{ height: '86px !important' }}
           onClick={() => onListItemClick(item.postUID)}
           actions={[
             <>
@@ -50,23 +53,31 @@ const BoardBody = () => {
           <Skeleton
             active
             key={item.postUID}
-            avatar={{ shape: 'square' }}
+            avatar={<Avatar shape="square" size={48} />}
             title={false}
             paragraph={{ rows: 2, width: ['50%', '35%'] }}
-            style={{ height: '73px !important' }}
             loading={isLoading}
           >
             <List.Item.Meta
               avatar={
                 (item.hasImage = true && (
-                  <Avatar src={''} shape="square" size={'large'} />
+                  <Avatar src={''} shape="square" size={48} />
                 ))
               }
-              title={<div>{item.title}</div>}
+              title={
+                <div style={{ fontSize: '16px', fontWeight: 'bold' }}>
+                  {item.title}
+                </div>
+              }
               description={
-                <div>
-                  {item.authorNickname}&emsp;|&emsp;
-                  {getTimeStamp(item.postCreatedAt, now)}
+                <div style={{ color: '#3b3b3b' }}>
+                  <NicknameBadge
+                    nickname={item.authorNickname}
+                    auth={item.authorAuth}
+                  />
+                  <span style={{ color: '#a4a4a4', padding: ' 0px 10px' }}>
+                    {getTimeStamp(item.postCreatedAt, now)}
+                  </span>
                 </div>
               }
             />

@@ -22,6 +22,7 @@ const Pagin = () => {
         <Pagination
           current={page}
           total={postTotal}
+          pageSize={15}
           showSizeChanger={false}
           showQuickJumper={false}
           onChange={(page) => onPageChange(page)}

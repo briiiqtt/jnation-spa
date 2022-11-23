@@ -61,7 +61,7 @@ router.get('/post/:postUID', async (req, res) => {
   }
 });
 router.get('/:boardUID/:page', async (req, res) => {
-  const pageSize = 10;
+  const pageSize = 15;
   try {
     const { page, boardUID } = req.params;
     const isSufficient = [page, boardUID].every((v) => v ?? false);

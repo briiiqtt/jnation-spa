@@ -2,6 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+
 export const spin = (
   <Spin
     indicator={
@@ -65,4 +68,20 @@ export const TextLoading = () => {
     setFlag(flag + 1);
   }, [flag]);
   return <>{flag % 3 === 0 ? '∙' : flag % 3 === 1 ? '∙ ∙' : '∙ ∙ ∙'}</>;
+};
+
+export const ScrollContainer = ({ children }) => {
+  return (
+    <>
+      <PerfectScrollbar
+        options={{
+          wheelSpeed: 0.7,
+          suppressScrollX: true,
+          wheelPropagation: true,
+        }}
+      >
+        {children}
+      </PerfectScrollbar>
+    </>
+  );
 };

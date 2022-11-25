@@ -24,7 +24,7 @@ const userModel = {
           ?
           )`;
     const uid = db.shortid.generate();
-    const nickname = db.shortid.generate();
+    const nickname = '임시닉네임_' + db.shortid.generate();
     const params = [uid, id, nickname, pw];
     return db.query(sql, params);
   },

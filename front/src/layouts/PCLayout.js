@@ -9,6 +9,8 @@ import MenuManager from '../components/Manager/MenuManager';
 import PostAdder from '../components/Board/PostAdder';
 import PostViewer from '../components/Board/PostViewer';
 import NotFound from '../components/404';
+import Main from '../components/Main';
+import { ScrollContainer } from '../components/common';
 
 const PCLayout = () => {
   return (
@@ -24,35 +26,38 @@ const PCLayout = () => {
         >
           <LeftBanner />
           <Sidebar />
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              height: `calc(100vh - 58px)`,
-              overflowY: 'scroll',
-              msOverflowStyle: 'none',
-            }}
-          >
-            <Body>
-              <Routes>
-                <Route path="/manage" element={<MenuManager />}></Route>
+          <ScrollContainer>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                height: `calc(100vh - 58px)`,
+                // overflowY: 'scroll',
+                // msOverflowStyle: 'none',
+              }}
+            >
+              <Body>
+                <Routes>
+                  <Route path="/" element={<Main />}></Route>
+                  <Route path="/manage" element={<MenuManager />}></Route>
 
-                <Route path="/board/:boardUID" element={<Board />}></Route>
-                <Route
-                  path="/board/:boardUID/:page"
-                  element={<Board />}
-                ></Route>
+                  <Route path="/board/:boardUID" element={<Board />}></Route>
+                  <Route
+                    path="/board/:boardUID/:page"
+                    element={<Board />}
+                  ></Route>
 
-                <Route path="/board/post/add" element={<PostAdder />}></Route>
-                <Route
-                  path="/board/post/:postUID"
-                  element={<PostViewer />}
-                ></Route>
+                  <Route path="/board/post/add" element={<PostAdder />}></Route>
+                  <Route
+                    path="/board/post/:postUID"
+                    element={<PostViewer />}
+                  ></Route>
 
-                <Route path="*" element={<NotFound />}></Route>
-              </Routes>
-            </Body>
-          </div>
+                  <Route path="*" element={<NotFound />}></Route>
+                </Routes>
+              </Body>
+            </div>
+          </ScrollContainer>
           <RightBanner />
         </div>
       </BrowserRouter>
@@ -66,7 +71,7 @@ const LeftBanner = () => {
   return (
     <div
       style={{
-        width: 'calc((100vw - 1144px + 6px)/2)', //+6px은 스크롤바 width건드린거땜에
+        width: 'calc((100vw - 1128px)/2)', //+6px은 스크롤바 width건드린거땜에
         display: 'flex',
         flexDirection: 'row-reverse',
         overflow: 'hidden',
@@ -85,7 +90,7 @@ const RightBanner = () => {
   return (
     <div
       style={{
-        width: 'calc((100vw - 1144px + 6px)/2)',
+        width: 'calc((100vw - 1128px)/2)',
         display: 'flex',
         flexDirection: 'row',
         overflow: 'hidden',

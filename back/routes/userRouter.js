@@ -22,7 +22,7 @@ router.post('/add', async (req, res) => {
     const isSufficient = [id, pw].every((v) => v ?? false);
     if (!isSufficient) throw new InsufficientArgumentError();
 
-    const qr = await userModel.is_this_userId_available(id);
+    const qr = await userModel.add_user(id, pw);
     let bool = qr[0].count === 0;
     res.send(bool);
   } catch (e) {

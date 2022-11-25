@@ -23,7 +23,7 @@ const BoardBody = () => {
     }, 900);
   }, []);
 
-  const onListItemClick = useCallback((uid) => {
+  const onPostTitleClick = useCallback((uid) => {
     navigate(`/board/post/${uid}`);
   });
 
@@ -36,7 +36,6 @@ const BoardBody = () => {
       renderItem={(item, i) => (
         <List.Item
           style={{ height: '86px !important' }}
-          onClick={() => onListItemClick(item.postUID)}
           actions={[
             <>
               <EyeFilled />
@@ -65,15 +64,23 @@ const BoardBody = () => {
                 ))
               }
               title={
-                <div style={{ fontSize: '16px', fontWeight: 'bold' }}>
+                <span
+                  style={{
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => onPostTitleClick(item.postUID)}
+                >
                   {item.title}
-                </div>
+                </span>
               }
               description={
                 <div style={{ color: '#3b3b3b' }}>
                   <NicknameBadge
                     nickname={item.authorNickname}
                     auth={item.authorAuth}
+                    uid={item.authorUID}
                   />
                   <span style={{ color: '#a4a4a4', padding: ' 0px 10px' }}>
                     {getTimeStamp(item.postCreatedAt, now)}

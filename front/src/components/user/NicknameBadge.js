@@ -1,5 +1,5 @@
 import { graySpin } from '../common';
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   Icon1SquareFill,
   Icon2SquareFill,
@@ -13,12 +13,15 @@ import {
 } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
 
-const NicknameBadge = ({ auth, nickname }) => {
+const NicknameBadge = ({ auth, nickname, uid }) => {
   // const isLoading = useSelector((state) => state.board.isLoading);
   const num_auth = parseInt(auth);
   // if (isNaN(num_auth) || num_auth > 9 || isLoading) {
   //   return graySpin();
   // }
+  const onNicknameClick = useCallback((uid) => {
+    alert(uid);
+  });
   return (
     <>
       <span>
@@ -78,7 +81,7 @@ const NicknameBadge = ({ auth, nickname }) => {
           />
         ) : null}
         &nbsp;
-        <span>{nickname}</span>
+        <span onClick={() => onNicknameClick(uid)}>{nickname}</span>
       </span>
     </>
   );

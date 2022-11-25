@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import { useLocation } from 'react-router-dom';
 
 export const spin = (
   <Spin
@@ -71,9 +72,16 @@ export const TextLoading = () => {
 };
 
 export const ScrollContainer = ({ children }) => {
+  const location = useLocation();
+  const ps = useRef();
+  useEffect(() => {
+    console.log(ps.current.scrollTop);
+    ps.current.scrollTop = 0;
+  }, [location]);
   return (
     <>
       <PerfectScrollbar
+        containerRef={(el) => (ps.current = el)}
         options={{
           wheelSpeed: 0.7,
           suppressScrollX: true,

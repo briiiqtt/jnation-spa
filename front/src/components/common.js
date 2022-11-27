@@ -76,7 +76,7 @@ export const ScrollContainer = ({ children }) => {
   const ps = useRef();
   useEffect(() => {
     console.log(ps.current.scrollTop);
-    ps.current.scrollTop = 0;
+    // ps.current.scrollTop = 0;
   }, [location]);
   return (
     <>

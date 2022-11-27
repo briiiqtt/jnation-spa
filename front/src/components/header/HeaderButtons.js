@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 const HeaderButtons = () => {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const iconStyle = useMemo(() => ({
     fontSize: '1.5rem',
@@ -19,7 +20,6 @@ const HeaderButtons = () => {
     color: '#ffffff',
     // padding: '5px',
     margin: '0px 15px',
-    cursor: 'pointer',
   }));
   const outerSpanStyle = useMemo(() => ({
     width: '120px',
@@ -46,8 +46,8 @@ const HeaderButtons = () => {
 
   const login = useCallback(() => {
     const user = {
-      id: 'hi',
-      pw: 'pw',
+      id: 'test',
+      pw: 'QWE!@#qwe123',
     };
     dispatch(action_login(user));
     // function init() {
@@ -85,6 +85,10 @@ const HeaderButtons = () => {
     // init();
   });
 
+  const join = () => {
+    navigate('/join');
+  };
+
   const logout = useCallback(() => {
     dispatch(action_logout());
   });
@@ -106,28 +110,27 @@ const HeaderButtons = () => {
           style={btnStyle}
           onMouseEnter={btnMouseEnter}
           onMouseLeave={btnMouseLeave}
-          onClick={logout}
+          onClick={join}
         >
           회원가입
         </span>
       </span>
     </>
   );
-  const navigate = useNavigate();
   const onPenButton = useCallback(() => {
     navigate(`/board/post/add`);
   });
 
   const loggedIn = (
     <>
-      <span style={iconStyle} onClick={onPenButton}>
-        <EditFilled />
+      <span style={iconStyle}>
+        <EditFilled style={{ cursor: 'pointer' }} onClick={onPenButton} />
       </span>
       <span style={iconStyle}>
-        <NotificDropdown />
+        <NotificDropdown style={{ cursor: 'pointer' }} />
       </span>
       <span style={iconStyle}>
-        <ProfileDropdown />
+        <ProfileDropdown style={{ cursor: 'pointer' }} />
       </span>
     </>
   );

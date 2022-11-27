@@ -28,13 +28,11 @@ const menuModel = {
     insert into
       menu_group(
           uid,
-          idx,
           name,
           seq
       )
       values(
           ?,
-          next_val('menu_group'),
           ?,
           ( select max(seq) + 1 from menu_group a )
           )`;
@@ -47,7 +45,6 @@ const menuModel = {
     insert into
       menu_content(
           uid,
-          idx,
           menu_group_uid,
           name,
           ref,
@@ -55,7 +52,6 @@ const menuModel = {
       )
       values(
           ?,
-          next_val('menu_group'),
           ?,
           ?,
           ?,

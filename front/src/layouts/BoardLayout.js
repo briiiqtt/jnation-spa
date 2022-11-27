@@ -4,68 +4,66 @@ import Body from '../components/Body';
 import Header from '../components/header/Header';
 import Sidebar from '../components/sidebar/Sidebar';
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MenuManager from '../components/Manager/MenuManager';
+import { Routes, Route } from 'react-router-dom';
+import MenuManager from '../components/manage/MenuManager';
 import PostAdder from '../components/Board/PostAdder';
 import PostViewer from '../components/Board/PostViewer';
 import NotFound from '../components/404';
 import Main from '../components/Main';
 import { ScrollContainer } from '../components/common';
 
-const PCLayout = () => {
+const BoardLayout = () => {
   return (
     <>
-      <BrowserRouter>
-        <Header />
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            height: 'calc(100vh - 58px)',
-          }}
-        >
-          <LeftBanner />
-          <Sidebar />
-          <ScrollContainer>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                height: `calc(100vh - 58px)`,
-                // overflowY: 'scroll',
-                // msOverflowStyle: 'none',
-              }}
-            >
-              <Body>
-                <Routes>
-                  <Route path="/" element={<Main />}></Route>
-                  <Route path="/manage" element={<MenuManager />}></Route>
+      <Header />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          height: 'calc(100vh - 58px)',
+        }}
+      >
+        <LeftBanner />
+        <Sidebar />
+        <ScrollContainer>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              height: `calc(100vh - 58px)`,
+              // overflowY: 'scroll',
+              // msOverflowStyle: 'none',
+            }}
+          >
+            <Body>
+              <Routes>
+                <Route path="/" element={<Main />}></Route>
+                <Route path="/manage" element={<MenuManager />}></Route>
 
-                  <Route path="/board/:boardUID" element={<Board />}></Route>
-                  <Route
-                    path="/board/:boardUID/:page"
-                    element={<Board />}
-                  ></Route>
+                <Route path="/board/:boardUID" element={<Board />}></Route>
+                <Route
+                  path="/board/:boardUID/:page"
+                  element={<Board />}
+                ></Route>
 
-                  <Route path="/board/post/add" element={<PostAdder />}></Route>
-                  <Route
-                    path="/board/post/:postUID"
-                    element={<PostViewer />}
-                  ></Route>
+                <Route path="/board/post/add" element={<PostAdder />}></Route>
+                <Route
+                  path="/board/post/:postUID"
+                  element={<PostViewer />}
+                ></Route>
 
-                  <Route path="*" element={<NotFound />}></Route>
-                </Routes>
-              </Body>
-            </div>
-          </ScrollContainer>
-          <RightBanner />
-        </div>
-      </BrowserRouter>
+                <Route path="*" element={<NotFound />}></Route>
+              </Routes>
+            </Body>
+          </div>
+        </ScrollContainer>
+        <RightBanner />
+      </div>
     </>
   );
 };
 
-export default PCLayout;
+export default BoardLayout;
 
 const LeftBanner = () => {
   return (

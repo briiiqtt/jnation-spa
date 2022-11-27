@@ -1,5 +1,8 @@
 import { call, all, fork, put, takeLatest } from '@redux-saga/core/effects';
 import {
+  JOIN_ERR,
+  JOIN_REQ,
+  JOIN_SUC,
   LOG_IN_ERR,
   LOG_IN_REQ,
   LOG_IN_SUC,
@@ -12,6 +15,9 @@ import axios from 'axios';
 
 function loginAPI(data) {
   return axios.post('user/login', data);
+}
+function joinAPI(data) {
+  return axios.post('/user/add', data);
 }
 
 function* login(action) {
@@ -40,6 +46,21 @@ function* logout(action) {
     });
   }
 }
+function* join(action) {
+  try {
+    const res = yield call(joinAPI, action.data);
+    yield put({
+      type: JOIN_SUC,
+      data: res.data,
+    });
+  } catch (error) {
+    console.error(error);
+    yield put({
+      type: JOIN_ERR,
+      data: error.response.data,
+    });
+  }
+}
 
 // function* watchLogin() {
 //   // take() -> action{ type: '', data: {} ... } 액션 객체가
@@ -52,7 +73,10 @@ function* watchLogin() {
 function* watchLogout() {
   yield takeLatest(LOG_OUT_REQ, logout);
 }
+function* watchJoin() {
+  yield takeLatest(JOIN_REQ, join);
+}
 
 export default function* userSaga() {
-  yield all([fork(watchLogin), fork(watchLogout)]);
+  yield all([fork(watchLogin), fork(watchLogout), fork(watchJoin)]);
 }

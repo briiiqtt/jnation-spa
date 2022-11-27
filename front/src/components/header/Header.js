@@ -1,5 +1,4 @@
-import { Input, Row } from 'antd';
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import HeaderButtons from '../header/HeaderButtons';
 import Logo from './Logo';
 import Searchbar from './Searchbar';
@@ -16,7 +15,7 @@ const Header = () => {
   }));
   return (
     <>
-      <Row style={headerStyle}>
+      <div style={headerStyle}>
         <div style={{ position: 'relative' }}>
           <Logo />
         </div>
@@ -24,7 +23,7 @@ const Header = () => {
         <div style={{ position: 'relative' }}>
           <HeaderButtons />
         </div>
-      </Row>
+      </div>
       <div
         style={{
           height: '58px',

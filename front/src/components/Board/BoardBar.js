@@ -2,14 +2,22 @@ import { EditOutlined, HomeFilled, RightOutlined } from '@ant-design/icons';
 import { Breadcrumb, Button } from 'antd';
 import React, { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { spin } from '../common';
 
 const BoardBar = () => {
+  const navigate = useNavigate();
   const boardName = useSelector((state) => state.board.name);
   const postTotal = useSelector((state) => state.board.post.total);
   const isLoading = useSelector((state) => state.board.isLoading);
   const fontSize = useCallback((fs) => ({ fontSize: fs + 'px' }));
+  const boardUID = useSelector((state) => state.board.uid);
+  const onBoardNameCLick = useCallback(() => {
+    navigate(`/board/${boardUID}`);
+  });
+  const onHomeIconCLick = useCallback(() => {
+    navigate(`/`);
+  });
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -34,6 +42,7 @@ const BoardBar = () => {
                   position: 'relative',
                   top: '4px',
                 }}
+                onClick={onHomeIconCLick}
               />
             </Breadcrumb.Item>
             <Breadcrumb.Item>
@@ -41,9 +50,17 @@ const BoardBar = () => {
                 spin
               ) : (
                 <>
-                  <span style={{ ...fontSize(18), fontWeight: 'bold' }}>
+                  <span
+                    style={{
+                      ...fontSize(18),
+                      fontWeight: 'bold',
+                      cursor: 'pointer',
+                    }}
+                    onClick={onBoardNameCLick}
+                  >
                     {boardName}
-                  </span>&nbsp;
+                  </span>
+                  &nbsp;
                   <span style={{ ...fontSize(15), color: 'gray' }}>
                     {`(${postTotal})`}
                   </span>

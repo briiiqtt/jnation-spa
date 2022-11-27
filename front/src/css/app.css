@@ -26,8 +26,14 @@
   background-color: #00b5ee;
   color: white;
 }
+.menu-inner-active > span > svg {
+  fill: white;
+}
 .menu-inner:hover {
   background-color: #eeeeee;
+}
+.ant-collapse-header {
+  height: 36.8px;
 }
 .ant-collapse-header:hover {
   background-color: #eeeeee;
@@ -36,25 +42,11 @@
   background-color: #e6eaec;
 }
 .ant-collapse-content-box {
-  padding: 4px 0px 16px 0px !important;
+  padding: 0px !important;
 }
-
-/* ::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-thumb {
-  background-color: #efefef;
-  border-radius: 10px;
-}
-::-webkit-scrollbar-track {
-  background-color: lightgray;
-  border-radius: 10px;
-  box-shadow: inset 0px 0px 5px white;
-} */
-
 .ant-input-affix-wrapper-lg {
   background-color: #827d7d;
-  height: 36px;
+  height: 36.8px;
 }
 .ant-input-lg {
   background-color: #827d7d;

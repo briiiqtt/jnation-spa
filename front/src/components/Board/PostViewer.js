@@ -1,19 +1,26 @@
 import { Avatar, Skeleton } from 'antd';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { action_getPost } from '../../reducers/boardReducer';
 import { graySpin, TextLoading } from '../common';
 import ProfileCard from '../user/ProfileCard';
 import PostTitle from './PostTitle';
 
 const PostViewer = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const postUID = useParams().postUID;
   const boardName = useSelector((state) => state.board.name);
   const currentPost = useSelector((state) => state.board.currentPost);
   const isLoading = useSelector((state) => state.board.isLoading);
-
+  const boardUID = useSelector((state) => state.board.uid);
+  const onBoardNameCLick = useCallback(() => {
+    navigate(`/board/${boardUID}`);
+  });
+  const onHomeIconCLick = useCallback(() => {
+    navigate(`/`);
+  });
   useEffect(() => {
     dispatch(action_getPost({ postUID }));
   }, [postUID]);
@@ -24,7 +31,14 @@ const PostViewer = () => {
           <div
             style={{ paddingBottom: '14px', borderBottom: '1px solid #A0A0A1' }}
           >
-            <span>{boardName}</span>
+            <span
+              style={{
+                cursor: 'pointer',
+              }}
+              onClick={onBoardNameCLick}
+            >
+              {boardName}
+            </span>
           </div>
           <div style={{ padding: '0px 28px' }}>
             <PostTitle />

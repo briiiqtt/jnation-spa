@@ -62,14 +62,12 @@ const boardModel = {
     insert into
       post(
         uid,
-        idx,
         board_uid,
         title,
         content,
         author_uid
       ) values (
         ?,
-        next_val('post'),
         ?,
         ?,
         ?,

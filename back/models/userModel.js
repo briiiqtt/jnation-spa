@@ -6,36 +6,43 @@ const userModel = {
     const params = [];
     return db.query(sql, params);
   },
-  async add_user(id, pw) {
+  async add_user(id, pw, nickname) {
     let sql = `
     insert into
       user(
           uid,
-          idx,
           id,
           nickname,
           pw
       )
       values(
           ?,
-          next_val('user'),
           ?,
           ?,
           ?
           )`;
     const uid = db.shortid.generate();
-    const nickname = '임시닉네임_' + db.shortid.generate();
     const params = [uid, id, nickname, pw];
     return db.query(sql, params);
   },
-  async get_uid_by_id(id) {
+  async getUserCountById(id) {
     const sql = `
-    select uid
+    select count(*) "count"
     from user
     where deleted_at is null
     and id = ?
   `;
     const params = [id];
+    return db.query(sql, params);
+  },
+  async getUserCountByNickname(nickname) {
+    const sql = `
+    select count(*) "count"
+    from user
+    where deleted_at is null
+    and nickname = ?
+  `;
+    const params = [nickname];
     return db.query(sql, params);
   },
   async login(id, pw) {

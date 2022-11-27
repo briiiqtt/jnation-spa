@@ -75,8 +75,12 @@ export const ScrollContainer = ({ children }) => {
   const location = useLocation();
   const ps = useRef();
   useEffect(() => {
+    const isBoard = location.pathname.slice(0, 6) === '/board';
     console.log(ps.current.scrollTop);
-    // ps.current.scrollTop = 0;
+    if (isBoard) {
+      ps.current.scrollTop = 0;
+    }
+    // console.log(ps.current.scrollTop);
   }, [location]);
   return (
     <>

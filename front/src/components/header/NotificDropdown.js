@@ -91,7 +91,7 @@ const Notification = () => {
           open={clicked}
           onOpenChange={handleClickChange}
         >
-          <BellFilled />
+          <BellFilled style={{ cursor: 'pointer' }} />
         </Popover>
       </Popover>
     </>

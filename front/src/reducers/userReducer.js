@@ -82,6 +82,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isJoining: false,
+        me: { id: action.data.id, nickname: action.data.nickname },
       };
     }
     case JOIN_ERR: {

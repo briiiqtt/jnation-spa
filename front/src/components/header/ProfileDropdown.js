@@ -5,7 +5,7 @@ import { Avatar } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { action_logout } from '../../reducers/userReducer';
 
-const NotificDropdown = () => {
+const ProfileDropdown = () => {
   const dispatch = useDispatch();
   const onLogoutBtn = useCallback(() => {
     hide();
@@ -73,11 +73,15 @@ const NotificDropdown = () => {
           open={clicked}
           onOpenChange={handleClickChange}
         >
-          <Avatar style={{ bottom: '3px' }} size={27} icon={<UserOutlined />} />
+          <Avatar
+            style={{ bottom: '3px', cursor: 'pointer' }}
+            size={27}
+            icon={<UserOutlined />}
+          />
         </Popover>
       </Popover>
     </>
   );
 };
 
-export default NotificDropdown;
+export default ProfileDropdown;

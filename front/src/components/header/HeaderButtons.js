@@ -1,5 +1,5 @@
 import { EditFilled } from '@ant-design/icons';
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import NotificDropdown from './NotificDropdown';
@@ -7,12 +7,17 @@ import ProfileDropdown from './ProfileDropdown';
 
 import { action_login, action_logout } from '../../reducers/userReducer';
 import { useNavigate } from 'react-router-dom';
+import { Form, Input, Modal } from 'antd';
 
 const HeaderButtons = () => {
+  const [isLoginModalOn, setIsLoginModalOn] = useState(false);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const onFinish = useCallback(async (data) => {
+    console.log(data);
+    // dispatch(action_join(data));
+  });
   const iconStyle = useMemo(() => ({
     fontSize: '1.5rem',
     position: 'relative',
@@ -34,7 +39,9 @@ const HeaderButtons = () => {
     margin: '0px 10px',
     cursor: 'pointer',
   }));
-
+  const join = () => {
+    navigate('/join');
+  };
   const btnMouseEnter = useCallback((e) => {
     e.target.style.border = '3px solid #ffffff';
     e.target.style.fontWeight = 'bold';
@@ -43,13 +50,11 @@ const HeaderButtons = () => {
     e.target.style.border = '1px solid #ffffff';
     e.target.style.fontWeight = 'normal';
   });
-
+  const onPenButton = useCallback(() => {
+    navigate(`/board/post/add`);
+  });
   const login = useCallback(() => {
-    const user = {
-      id: 'test',
-      pw: 'QWE!@#qwe123',
-    };
-    dispatch(action_login(user));
+    setIsLoginModalOn(true);
     // function init() {
     //   gapi.load('auth2', function () {
     //     gapi.auth2.init();
@@ -85,14 +90,6 @@ const HeaderButtons = () => {
     // init();
   });
 
-  const join = () => {
-    navigate('/join');
-  };
-
-  const logout = useCallback(() => {
-    dispatch(action_logout());
-  });
-
   const notLoggedIn = (
     <>
       <span style={outerSpanStyle}>
@@ -117,9 +114,6 @@ const HeaderButtons = () => {
       </span>
     </>
   );
-  const onPenButton = useCallback(() => {
-    navigate(`/board/post/add`);
-  });
 
   const loggedIn = (
     <>
@@ -127,33 +121,53 @@ const HeaderButtons = () => {
         <EditFilled style={{ cursor: 'pointer' }} onClick={onPenButton} />
       </span>
       <span style={iconStyle}>
-        <NotificDropdown style={{ cursor: 'pointer' }} />
+        <NotificDropdown />
       </span>
       <span style={iconStyle}>
-        <ProfileDropdown style={{ cursor: 'pointer' }} />
+        <ProfileDropdown />
       </span>
     </>
   );
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        top: '18px',
-        left: '120px',
-      }}
-    >
-      <span
+    <>
+      <div
         style={{
-          position: 'relative',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
+          position: 'absolute',
+          top: '18px',
+          left: '120px',
         }}
       >
-        {isLoggedIn ? loggedIn : notLoggedIn}
-      </span>
-    </div>
+        <span
+          style={{
+            position: 'relative',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          {isLoggedIn ? loggedIn : notLoggedIn}
+        </span>
+      </div>
+      <Modal
+        title="로그인"
+        open={isLoginModalOn}
+        onOk={onFinish}
+        // onCancel={setIsLoginModalOn(false)}
+      >
+        <Form>
+          <Form.Item label="아이디" labelCol={{ span: 3 }}>
+            <Input />
+          </Form.Item>
+          <Form.Item label="비밀번호" labelCol={{ span: 3 }}>
+            <Input.Password />
+          </Form.Item>
+          <Form.Item>
+            {/* <Button /> */}
+          </Form.Item>
+        </Form>
+      </Modal>
+    </>
   );
 };
 

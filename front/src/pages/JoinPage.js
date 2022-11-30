@@ -120,9 +120,12 @@ const JoinForm = () => {
 };
 
 const PWConfirm = () => {
+  const [isValid, setIsValid] = useState('');
   return (
     <>
       <Form.Item
+        hasFeedback
+        validateStatus={isValid}
         label="비밀번호 확인"
         name="pw-confirm"
         style={{ height: '50px', width: '750px' }}
@@ -134,9 +137,12 @@ const PWConfirm = () => {
           ({ getFieldValue }) => ({
             validator(_, value) {
               if (!value || getFieldValue('pw') === value) {
+                setIsValid('success');
                 return Promise.resolve();
+              } else {
+                setIsValid('error');
+                return Promise.reject(new Error('두 비밀번호가 일치하지 않음'));
               }
-              return Promise.reject(new Error('두 비밀번호가 일치하지 않음'));
             },
           }),
         ]}
@@ -148,9 +154,12 @@ const PWConfirm = () => {
 };
 
 const PW = () => {
+  const [isValid, setIsValid] = useState('');
   return (
     <>
       <Form.Item
+        hasFeedback
+        validateStatus={isValid}
         label="비밀번호"
         name="pw"
         style={{ height: '50px', width: '750px' }}
@@ -176,7 +185,13 @@ const PW = () => {
               if (str[0] === ',') str = str.slice(1);
               if (!str && !value.match(engOrNumOrTeuksoo))
                 str += '사용할 수 없는 문자가 포함됨';
-              if (str) return Promise.reject(str);
+              if (str) {
+                setIsValid('error');
+                return Promise.reject(str);
+              } else {
+                setIsValid('success');
+                return Promise.resolve();
+              }
             },
           }),
         ]}
@@ -188,9 +203,12 @@ const PW = () => {
 };
 
 const Id = () => {
+  const [isValid, setIsValid] = useState('');
   return (
     <>
       <Form.Item
+        hasFeedback
+        validateStatus={isValid}
         label="아이디"
         name="id"
         style={{ height: '50px', width: '750px' }}
@@ -210,11 +228,22 @@ const Id = () => {
               if (!value.match(engOrNum)) str += ', 영문 또는 숫자로만 구성';
               if (!value.match(fourToTwenty)) str += ', 4글자 ~ 20글자';
               if (str[0] === ',') str = str.slice(1);
-              if (str) return Promise.reject(str);
+              if (str) {
+                setIsValid('error');
+                return Promise.reject(str);
+              }
 
-              let resp = await axios.get(`/user/is_id_available?id=${value}`);
-              if (resp.data.isAvailable) return Promise.resolve();
-              else return Promise.reject('이미 사용중인 아이디');
+              let resp = await axios.get(`/user/is_id_exist?id=${value}`);
+              if (resp.data.isExist === true) {
+                setIsValid('error');
+                return Promise.reject('이미 사용중인 아이디');
+              } else if (resp.data.isExist === false) {
+                setIsValid('success');
+                return Promise.resolve();
+              } else {
+                setIsValid('error');
+                return Promise.reject(resp.statusText);
+              }
             },
           }),
         ]}
@@ -226,9 +255,12 @@ const Id = () => {
 };
 
 const Nickname = () => {
+  const [isValid, setIsValid] = useState('');
   return (
     <>
       <Form.Item
+        hasFeedback
+        validateStatus={isValid}
         label="닉네임"
         name="nickname"
         style={{ height: '50px', width: '750px' }}
@@ -239,7 +271,11 @@ const Nickname = () => {
           },
           ({ getFieldValue }) => ({
             async validator(_, value) {
-              if (!value) return Promise.reject();
+              // setIsValid('validating');
+              if (!value) {
+                setIsValid('error');
+                return Promise.reject();
+              }
               const engOrNumOrTeuksoo = /^[A-Za-z0-9ㄱ-ㅎㅏ-ㅣ가-힣]+$/g;
               const eightToFourty = /^.{2,20}$/g;
               let str = '';
@@ -247,13 +283,24 @@ const Nickname = () => {
               if (str[0] === ',') str = str.slice(1);
               if (!str && !value.match(engOrNumOrTeuksoo))
                 str += '사용할 수 없는 문자가 포함됨';
-              if (str) return Promise.reject(str);
+              if (str) {
+                setIsValid('error');
+                return Promise.reject(str);
+              }
 
               let resp = await axios.get(
-                `/user/is_nickname_available?nickname=${value}`
+                `/user/is_nickname_exist?nickname=${value}`
               );
-              if (resp.data.isAvailable) return Promise.resolve();
-              else return Promise.reject('이미 사용중인 닉네임');
+              if (resp.data.isExist === true) {
+                setIsValid('error');
+                return Promise.reject('이미 사용중인 닉네임');
+              } else if (resp.data.isExist === false) {
+                setIsValid('success');
+                return Promise.resolve();
+              } else {
+                setIsValid('error');
+                throw new Error(resp.statusText);
+              }
             },
           }),
         ]}

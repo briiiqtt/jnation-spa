@@ -1,5 +1,5 @@
 import { EditFilled } from '@ant-design/icons';
-import React, { useMemo, useCallback, useState } from 'react';
+import React, { useMemo, useCallback, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import NotificDropdown from './NotificDropdown';
@@ -7,16 +7,29 @@ import ProfileDropdown from './ProfileDropdown';
 
 import { action_login, action_logout } from '../../reducers/userReducer';
 import { useNavigate } from 'react-router-dom';
-import { Form, Input, Modal } from 'antd';
+import { Button, Form, Input, Modal } from 'antd';
 
 const HeaderButtons = () => {
+  const me = useSelector((state) => state.user.me);
+  const isLoggingIn = useSelector((state) => state.user.isLoggingIn);
   const [isLoginModalOn, setIsLoginModalOn] = useState(false);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const onFinish = useCallback(async (data) => {
-    console.log(data);
-    // dispatch(action_join(data));
+    dispatch(action_login(data));
+  });
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      setIsLoginModalOn(false);
+    } else {
+    }
+  }, [isLoggingIn]);
+
+  const onModalCancel = useCallback(() => {
+    setIsLoginModalOn(false);
   });
   const iconStyle = useMemo(() => ({
     fontSize: '1.5rem',
@@ -152,18 +165,26 @@ const HeaderButtons = () => {
       <Modal
         title="로그인"
         open={isLoginModalOn}
-        onOk={onFinish}
-        // onCancel={setIsLoginModalOn(false)}
+        footer={null}
+        maskClosable
+        // mask={false}
+        onCancel={onModalCancel}
       >
-        <Form>
-          <Form.Item label="아이디" labelCol={{ span: 3 }}>
+        <Form
+          labelCol={{ span: 4 }}
+          style={{ padding: '0px 30px' }}
+          onFinish={onFinish}
+        >
+          <Form.Item label="아이디" name="id">
             <Input />
           </Form.Item>
-          <Form.Item label="비밀번호" labelCol={{ span: 3 }}>
-            <Input.Password />
+          <Form.Item label="비밀번호" name="pw">
+            <Input.Password name="pw" />
           </Form.Item>
-          <Form.Item>
-            {/* <Button /> */}
+          <Form.Item style={{ textAlign: 'center' }}>
+            <Button type="primary" htmlType="submit" loading={isLoggingIn}>
+              로그인
+            </Button>
           </Form.Item>
         </Form>
       </Modal>

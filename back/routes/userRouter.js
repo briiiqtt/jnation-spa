@@ -33,7 +33,7 @@ router.post('/add', async (req, res) => {
     }
   }
 });
-router.get('/is_id_available', async (req, res) => {
+router.get('/is_id_exist', async (req, res) => {
   try {
     const { id } = req.query;
     const isSufficient = [id].every((v) => v ?? false);
@@ -43,9 +43,9 @@ router.get('/is_id_available', async (req, res) => {
     const { count } = queryResult[0];
 
     if (count === 0) {
-      res.send({ isAvailable: true });
+      res.send({ isExist: false });
     } else if (count === 1) {
-      res.send({ isAvailable: false });
+      res.send({ isExist: true });
     } else {
       throw new Error();
     }
@@ -58,7 +58,7 @@ router.get('/is_id_available', async (req, res) => {
     }
   }
 });
-router.get('/is_nickname_available', async (req, res) => {
+router.get('/is_nickname_exist', async (req, res) => {
   try {
     const { nickname } = req.query;
     const isSufficient = [nickname].every((v) => v ?? false);
@@ -68,9 +68,9 @@ router.get('/is_nickname_available', async (req, res) => {
     const { count } = queryResult[0];
 
     if (count === 0) {
-      res.send({ isAvailable: true });
+      res.send({ isExist: false });
     } else if (count === 1) {
-      res.send({ isAvailable: false });
+      res.send({ isExist: true });
     } else {
       throw new Error();
     }
@@ -99,7 +99,7 @@ router.post('/login', async (req, res) => {
     if (e instanceof InsufficientArgumentError) {
       res.sendStatus(400);
     } else if (e instanceof LoginFailedError) {
-      res.sendStatus(404);
+      res.sendStatus(401);
     } else {
       console.error(e);
       res.sendStatus(500);

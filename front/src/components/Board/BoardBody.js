@@ -18,9 +18,9 @@ const BoardBody = () => {
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
-    setInterval(() => {
-      setNow(new Date());
-    }, 900);
+    // setInterval(() => {
+    //   setNow(new Date());
+    // }, 900);
   }, []);
 
   const onPostTitleClick = useCallback((uid) => {

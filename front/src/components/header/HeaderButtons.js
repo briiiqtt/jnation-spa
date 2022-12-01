@@ -1,36 +1,64 @@
-import { EditFilled } from '@ant-design/icons';
-import React, { useMemo, useCallback, useState, useEffect } from 'react';
+import { ConsoleSqlOutlined, EditFilled } from '@ant-design/icons';
+import React, {
+  useMemo,
+  useCallback,
+  useState,
+  useEffect,
+  useRef,
+} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import NotificDropdown from './NotificDropdown';
 import ProfileDropdown from './ProfileDropdown';
 
 import { action_login, action_logout } from '../../reducers/userReducer';
-import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, Modal } from 'antd';
+import { Link } from '../common';
 
 const HeaderButtons = () => {
-  const me = useSelector((state) => state.user.me);
-  const isLoggingIn = useSelector((state) => state.user.isLoggingIn);
   const [isLoginModalOn, setIsLoginModalOn] = useState(false);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  return (
+    <>
+      <div
+        style={{
+          position: 'absolute',
+          top: '18px',
+          left: '120px',
+        }}
+      >
+        <span
+          style={{
+            position: 'relative',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          {isLoggedIn ? (
+            <LoggedInButtons
+              setIsLoginModalOn={setIsLoginModalOn}
+              isLoginModalOn={isLoginModalOn}
+            />
+          ) : (
+            <NotLoggedInButtons
+              setIsLoginModalOn={setIsLoginModalOn}
+              isLoginModalOn={isLoginModalOn}
+            />
+          )}
+          <LoginModal
+            setIsLoginModalOn={setIsLoginModalOn}
+            isLoginModalOn={isLoginModalOn}
+          />
+        </span>
+      </div>
+    </>
+  );
+};
 
-  const onFinish = useCallback(async (data) => {
-    dispatch(action_login(data));
-  });
+export default HeaderButtons;
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      setIsLoginModalOn(false);
-    } else {
-    }
-  }, [isLoggingIn]);
-
-  const onModalCancel = useCallback(() => {
-    setIsLoginModalOn(false);
-  });
+const LoggedInButtons = () => {
   const iconStyle = useMemo(() => ({
     fontSize: '1.5rem',
     position: 'relative',
@@ -39,34 +67,26 @@ const HeaderButtons = () => {
     // padding: '5px',
     margin: '0px 15px',
   }));
-  const outerSpanStyle = useMemo(() => ({
-    width: '120px',
-    textAlign: 'center',
-    verticalAlign: 'middle',
-  }));
-  const btnStyle = useMemo(() => ({
-    backgroundColor: '#2d2121',
-    border: '1px solid white',
-    padding: '3px 18px',
-    color: 'white',
-    margin: '0px 10px',
-    cursor: 'pointer',
-  }));
-  const join = () => {
-    navigate('/join');
-  };
-  const btnMouseEnter = useCallback((e) => {
-    e.target.style.border = '3px solid #ffffff';
-    e.target.style.fontWeight = 'bold';
-  });
-  const btnMouseLeave = useCallback((e) => {
-    e.target.style.border = '1px solid #ffffff';
-    e.target.style.fontWeight = 'normal';
-  });
-  const onPenButton = useCallback(() => {
-    navigate(`/board/post/add`);
-  });
+  return (
+    <>
+      <span style={iconStyle}>
+        <Link href={`/board/post/add`}>
+          <EditFilled style={{ cursor: 'pointer' }} />
+        </Link>
+      </span>
+      <span style={iconStyle}>
+        <NotificDropdown />
+      </span>
+      <span style={iconStyle}>
+        <ProfileDropdown />
+      </span>
+    </>
+  );
+};
+
+const NotLoggedInButtons = ({ setIsLoginModalOn, isLoginModalOn }) => {
   const login = useCallback(() => {
+    console.log(isLoginModalOn);
     setIsLoginModalOn(true);
     // function init() {
     //   gapi.load('auth2', function () {
@@ -102,8 +122,28 @@ const HeaderButtons = () => {
     // }
     // init();
   });
-
-  const notLoggedIn = (
+  const btnStyle = useMemo(() => ({
+    backgroundColor: '#2d2121',
+    border: '1px solid white',
+    padding: '3px 18px',
+    color: 'white',
+    margin: '0px 10px',
+    cursor: 'pointer',
+  }));
+  const btnMouseEnter = useCallback((e) => {
+    e.target.style.border = '3px solid #ffffff';
+    e.target.style.fontWeight = 'bold';
+  });
+  const btnMouseLeave = useCallback((e) => {
+    e.target.style.border = '1px solid #ffffff';
+    e.target.style.fontWeight = 'normal';
+  });
+  const outerSpanStyle = useMemo(() => ({
+    width: '120px',
+    textAlign: 'center',
+    verticalAlign: 'middle',
+  }));
+  return (
     <>
       <span style={outerSpanStyle}>
         <span
@@ -116,52 +156,52 @@ const HeaderButtons = () => {
         </span>
       </span>
       <span style={outerSpanStyle}>
-        <span
-          style={btnStyle}
-          onMouseEnter={btnMouseEnter}
-          onMouseLeave={btnMouseLeave}
-          onClick={join}
-        >
-          회원가입
-        </span>
+        <Link href={'/join'}>
+          <span
+            style={btnStyle}
+            onMouseEnter={btnMouseEnter}
+            onMouseLeave={btnMouseLeave}
+          >
+            회원가입
+          </span>
+        </Link>
       </span>
     </>
   );
+};
 
-  const loggedIn = (
-    <>
-      <span style={iconStyle}>
-        <EditFilled style={{ cursor: 'pointer' }} onClick={onPenButton} />
-      </span>
-      <span style={iconStyle}>
-        <NotificDropdown />
-      </span>
-      <span style={iconStyle}>
-        <ProfileDropdown />
-      </span>
-    </>
-  );
+const LoginModal = ({ setIsLoginModalOn, isLoginModalOn }) => {
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const formRef = useRef();
+  const me = useSelector((state) => state.user.me);
+  const isLoggingIn = useSelector((state) => state.user.isLoggingIn);
 
+  useEffect(() => {
+    setIsValid('');
+  }, [isLoginModalOn]);
+
+  const dispatch = useDispatch();
+  const [isValid, setIsValid] = useState('');
+
+  const eraseLoginForm = useCallback(() => {
+    formRef.current.setFieldValue('pw', '');
+  });
+
+  const onFinish = useCallback(async (data) => {
+    dispatch(action_login(data));
+    eraseLoginForm();
+  });
+
+  useEffect(() => {
+    isLoggedIn && setIsLoginModalOn(false);
+    me === 'Unauthorized' && setIsValid('error');
+  }, [isLoggingIn]);
+
+  const onModalCancel = useCallback(() => {
+    setIsLoginModalOn(false);
+  });
   return (
     <>
-      <div
-        style={{
-          position: 'absolute',
-          top: '18px',
-          left: '120px',
-        }}
-      >
-        <span
-          style={{
-            position: 'relative',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          {isLoggedIn ? loggedIn : notLoggedIn}
-        </span>
-      </div>
       <Modal
         title="로그인"
         open={isLoginModalOn}
@@ -170,19 +210,45 @@ const HeaderButtons = () => {
         // mask={false}
         onCancel={onModalCancel}
       >
-        <Form
-          labelCol={{ span: 4 }}
-          style={{ padding: '0px 30px' }}
-          onFinish={onFinish}
-        >
-          <Form.Item label="아이디" name="id">
-            <Input />
-          </Form.Item>
-          <Form.Item label="비밀번호" name="pw">
-            <Input.Password name="pw" />
-          </Form.Item>
+        <Form labelCol={{ span: 5 }} onFinish={onFinish} ref={formRef}>
+          <div style={{ minHeight: '150px', paddingRight: '50px' }}>
+            <Form.Item
+              label="아이디"
+              name="id"
+              hasFeedback
+              validateStatus={isValid}
+              rules={[
+                {
+                  required: true,
+                  message: '아이디를 입력하세요.',
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="비밀번호"
+              name="pw"
+              hasFeedback
+              validateStatus={isValid}
+              extra={isValid === 'error' && '아이디 또는 비밀번호가 틀립니다.'}
+              rules={[
+                {
+                  required: true,
+                  message: '비밀번호를 입력하세요.',
+                },
+              ]}
+            >
+              <Input.Password name="pw" />
+            </Form.Item>
+          </div>
           <Form.Item style={{ textAlign: 'center' }}>
-            <Button type="primary" htmlType="submit" loading={isLoggingIn}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={isLoggingIn}
+              style={{ width: '25%' }}
+            >
               로그인
             </Button>
           </Form.Item>
@@ -191,5 +257,3 @@ const HeaderButtons = () => {
     </>
   );
 };
-
-export default HeaderButtons;

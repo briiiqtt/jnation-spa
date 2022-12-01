@@ -2,7 +2,7 @@ const { shortid } = require('./db');
 const db = require('./db');
 
 const boardModel = {
-  async get_paged_board(limitFrom, pagePostCount, boardUID) {
+  async getPagedBoard(limitFrom, pagePostCount, boardUID) {
     let sql = `
     select 
       p.uid "postUID",
@@ -27,7 +27,7 @@ const boardModel = {
     const params = [boardUID, limitFrom, pagePostCount];
     return db.query(sql, params);
   },
-  async get_board_post_count(boardUID) {
+  async getBoardPostCount(boardUID) {
     let sql = `
     select count(*) "total"
     from post
@@ -37,7 +37,7 @@ const boardModel = {
     const params = [boardUID];
     return db.query(sql, params);
   },
-  async get_board_info(boardUID) {
+  async getBoardInfo(boardUID) {
     let sql = `
     select uid, name, ref
     from menu_content
@@ -47,7 +47,7 @@ const boardModel = {
     const params = [boardUID];
     return db.query(sql, params);
   },
-  async get_all_board_info() {
+  async getAllBoardInfo() {
     let sql = `
     select uid, name, ref
     from menu_content
@@ -57,7 +57,7 @@ const boardModel = {
     const params = [];
     return db.query(sql, params);
   },
-  async add_post(uid, boardUID, title, content, authorUID) {
+  async addPost(uid, boardUID, title, content, authorUID) {
     let sql = `
     insert into
       post(
@@ -77,7 +77,7 @@ const boardModel = {
     const params = [uid, boardUID, title, content, authorUID];
     return db.query(sql, params);
   },
-  async get_post(postUID) {
+  async getPost(postUID) {
     let sql = `
     select
       p.uid "uid",
@@ -102,6 +102,46 @@ const boardModel = {
     and p.uid = ?
     `;
     const params = [postUID];
+    return db.query(sql, params);
+  },
+  async addComment(
+    uid,
+    postUID,
+    content,
+    authorUID,
+    isReply,
+    originCommentUID,
+    taggedUserUID
+  ) {
+    let sql = `
+    insert into
+      comment(
+        uid,
+        post_uid,
+        content,
+        author_uid,
+        is_reply,
+        origin_comment_uid,
+        tagged_user_uid
+      ) values (
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?,
+        ?
+      )
+    `;
+    const params = [
+      uid,
+      postUID,
+      content,
+      authorUID,
+      isReply,
+      originCommentUID,
+      taggedUserUID,
+    ];
     return db.query(sql, params);
   },
 };

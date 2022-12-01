@@ -26,6 +26,9 @@
   background-color: #00b5ee;
   color: white;
 }
+.menu-inner-active > span {
+  color: white !important;
+}
 .menu-inner-active > span > svg {
   fill: white;
 }

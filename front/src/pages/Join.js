@@ -54,7 +54,7 @@ const JoinForm = () => {
   });
 
   useEffect(() => {
-    if (me) {
+    if (me?.nickname) {
       setJoinFinished(true);
     }
   }, [isJoining]);
@@ -129,13 +129,14 @@ const PWConfirm = () => {
         label="비밀번호 확인"
         name="pw-confirm"
         style={{ height: '50px', width: '750px' }}
+        extra={isValid === 'success' ? '일치' : ''}
         rules={[
-          {
-            required: true,
-            message: '동일한 비밀번호를 입력하세요.',
-          },
           ({ getFieldValue }) => ({
             validator(_, value) {
+              if (!value) {
+                setIsValid('error');
+                return Promise.reject('필수');
+              }
               if (!value || getFieldValue('pw') === value) {
                 setIsValid('success');
                 return Promise.resolve();
@@ -163,14 +164,14 @@ const PW = () => {
         label="비밀번호"
         name="pw"
         style={{ height: '50px', width: '750px' }}
+        extra={isValid === 'success' ? '사용 가능' : ''}
         rules={[
-          {
-            required: true,
-            message: '사용할 비밀번호를 입력하세요.',
-          },
           ({ getFieldValue }) => ({
             async validator(_, value) {
-              if (!value) return Promise.reject();
+              if (!value) {
+                setIsValid('error');
+                return Promise.reject('필수');
+              }
               const teuksoo = /(?=.?[#?!@$%^&-])/g;
               const num = /(?=.?[0-9])/g;
               const eng = /(?=.?[A-Za-z])/g;
@@ -212,14 +213,14 @@ const Id = () => {
         label="아이디"
         name="id"
         style={{ height: '50px', width: '750px' }}
+        extra={isValid === 'success' ? '사용 가능' : ''}
         rules={[
-          {
-            required: true,
-            message: '사용할 아이디를 입력하세요.',
-          },
           ({ getFieldValue }) => ({
             async validator(_, value) {
-              if (!value) return Promise.reject();
+              if (!value) {
+                setIsValid('error');
+                return Promise.reject('필수');
+              }
               const startWithEnglish = /^[A-Za-z]/g;
               const engOrNum = /^[A-Za-z0-9]+$/g;
               const fourToTwenty = /^.{4,20}$/g;
@@ -264,17 +265,14 @@ const Nickname = () => {
         label="닉네임"
         name="nickname"
         style={{ height: '50px', width: '750px' }}
+        extra={isValid === 'success' ? '사용 가능' : ''}
         rules={[
-          {
-            required: true,
-            message: '사용할 닉네임을 입력하세요.',
-          },
           ({ getFieldValue }) => ({
             async validator(_, value) {
               // setIsValid('validating');
               if (!value) {
                 setIsValid('error');
-                return Promise.reject();
+                return Promise.reject('필수');
               }
               const engOrNumOrTeuksoo = /^[A-Za-z0-9ㄱ-ㅎㅏ-ㅣ가-힣]+$/g;
               const eightToFourty = /^.{2,20}$/g;

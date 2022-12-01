@@ -4,7 +4,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const spin = (
   <Spin
@@ -87,13 +87,36 @@ export const ScrollContainer = ({ children }) => {
       <PerfectScrollbar
         containerRef={(el) => (ps.current = el)}
         options={{
-          wheelSpeed: 0.7,
+          // wheelSpeed: 0.7,
           suppressScrollX: true,
           wheelPropagation: true,
         }}
       >
         {children}
       </PerfectScrollbar>
+    </>
+  );
+};
+
+export const Link = ({ children, href, reload }) => {
+  const navigate = useNavigate();
+  const onClick = useCallback((e) => {
+    if (!reload) {
+      e.preventDefault();
+      navigate(href);
+    }
+  });
+  return (
+    <>
+      <a
+        onClick={onClick}
+        target="_blank"
+        rel="noreferrer"
+        href={href}
+        style={{ color: 'inherit' }}
+      >
+        {children}
+      </a>
     </>
   );
 };

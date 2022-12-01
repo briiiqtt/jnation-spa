@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Board from '../components/Board/Board';
-import Body from '../components/Body';
+import Body from './Body';
 import Header from '../components/header/Header';
 import Sidebar from '../components/sidebar/Sidebar';
 
@@ -9,8 +9,9 @@ import MenuManager from '../components/manage/MenuManager';
 import PostAdder from '../components/Board/PostAdder';
 import PostViewer from '../components/Board/PostViewer';
 import NotFound from '../components/404';
-import Main from '../components/Main';
+import Main from '../pages/Main';
 import { ScrollContainer } from '../components/common';
+import Post from '../pages/Post';
 
 const BoardLayout = () => {
   return (
@@ -39,20 +40,11 @@ const BoardLayout = () => {
               <Routes>
                 <Route path="/" element={<Main />}></Route>
                 <Route path="/manage" element={<MenuManager />}></Route>
-
-                <Route path="/board/:boardUID" element={<Board />}></Route>
-                <Route
-                  path="/board/:boardUID/:page"
-                  element={<Board />}
-                ></Route>
-
-                <Route path="/board/post/add" element={<PostAdder />}></Route>
-                <Route
-                  path="/board/post/:postUID"
-                  element={<PostViewer />}
-                ></Route>
-
-                <Route path="*" element={<NotFound />}></Route>
+                <Route path="/:boardUID" element={<Board />}></Route>
+                <Route path="/:boardUID/:page" element={<Board />}></Route>
+                <Route path="/post/add" element={<PostAdder />}></Route>
+                <Route path="/post/:postUID" element={<Post />}></Route>
+                <Route path="/*" element={<NotFound />}></Route>
               </Routes>
             </Body>
           </div>
@@ -73,13 +65,16 @@ const LeftBanner = () => {
         display: 'flex',
         flexDirection: 'row-reverse',
         overflow: 'hidden',
-        // backgroundImage: `url("https://sgimage.netmarble.com/images/netmarble/enn/20220728/bhst1658997251182.jpg")`,
+        backgroundPosition: 'right top',
+        backgroundRepeat: 'no-repeat',
+        backgroundImage: `url("http://13.124.184.111:50080/resources/9e61bb8a-5f17-4913-bcac-0f075bf808d9.png")`,
       }}
     >
-      <img
+      {/* <img
         style={{ objectFit: 'none', objectPosition: 'right top' }}
-        src="https://sgimage.netmarble.com/images/netmarble/enn/20220728/bhst1658997251182.jpg"
-      ></img>
+        // src="https://sgimage.netmarble.com/images/netmarble/enn/20220728/bhst1658997251182.jpg"
+        src="http://13.124.184.111:50080/resources/9e61bb8a-5f17-4913-bcac-0f075bf808d9.png"
+      ></img> */}
     </div>
   );
 };
@@ -92,13 +87,16 @@ const RightBanner = () => {
         display: 'flex',
         flexDirection: 'row',
         overflow: 'hidden',
-        // backgroundImage: `url("https://sgimage.netmarble.com/images/netmarble/enn/20220728/bhst1658997251182.jpg")`,
+        backgroundPosition: 'left top',
+        backgroundRepeat: 'no-repeat',
+        backgroundImage: `url("http://13.124.184.111:50080/resources/67080f7c-0f0b-45db-8a52-f33bb253ea5e.png")`,
       }}
     >
-      <img
+      {/* <img
         style={{ objectFit: 'none', objectPosition: 'left top' }}
-        src="https://sgimage.netmarble.com/images/netmarble/enn/20220728/qjsp1658997256535.jpg"
-      ></img>
+        // src="https://sgimage.netmarble.com/images/netmarble/enn/20220728/qjsp1658997256535.jpg"
+        src="http://13.124.184.111:50080/resources/67080f7c-0f0b-45db-8a52-f33bb253ea5e.png"
+      ></img> */}
     </div>
   );
 };

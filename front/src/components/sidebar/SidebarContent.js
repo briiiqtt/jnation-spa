@@ -1,25 +1,22 @@
 import { Collapse } from 'antd';
-import React, { useEffect, useState, useCallback } from 'react';
-import {
-  ArrowReturnRight,
-  Folder,
-  FolderFill,
-  Link45deg,
-} from 'react-bootstrap-icons';
+import React, { useCallback } from 'react';
+import { ArrowReturnRight, FolderFill, Link45deg } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link } from '../common';
 
 const { Panel } = Collapse;
 
 const SidebarContent = () => {
   const menus = useSelector((state) => state.menu.menus);
   const boardUID = useSelector((state) => state.board.uid);
-  const navigate = useNavigate();
 
-  const onMenuContentClick = (content) => {
-    if (content.type === 'board') navigate(`/board/${content.uid}`);
-    else if (content.type === 'external_link') window.open(content.ref);
-  };
+  const getPath = useCallback((content) => {
+    return content.type === 'board'
+      ? `/board/${content.uid}`
+      : content.type === 'external_link'
+      ? content.ref
+      : null;
+  });
 
   return (
     <>
@@ -56,38 +53,48 @@ const SidebarContent = () => {
               className="menu-panel"
             >
               {group.contents.map((content, i) => (
-                <p
+                <Link
                   key={i}
-                  onClick={() => onMenuContentClick(content)}
-                  className={
-                    content.uid === boardUID
-                      ? 'menu-inner-active'
-                      : 'menu-inner'
-                  }
-                  style={{
-                    cursor: 'pointer',
-                    // display: 'flex',
-                    // justifyContent: 'space-between',
-                  }}
+                  href={getPath(content)}
+                  reload={content.type !== 'board'}
                 >
-                  {content.type === 'external_link' && (
-                    <span>
-                      <Link45deg
-                        fontSize={18}
-                        style={{ margin: '8px 10px 0px 0px', color: '#808080' }}
-                      />
-                    </span>
-                  )}
-                  {content.type === 'board' && (
-                    <span>
-                      <ArrowReturnRight
-                        fontSize={18}
-                        style={{ margin: '8px 10px 0px 0px', color: '#b8b8b8' }}
-                      />
-                    </span>
-                  )}
-                  <span>{content.name}</span>
-                </p>
+                  <span
+                    className={
+                      content.uid === boardUID
+                        ? 'menu-inner-active'
+                        : 'menu-inner'
+                    }
+                    style={{
+                      cursor: 'pointer',
+                      // display: 'flex',
+                      // justifyContent: 'space-between',
+                    }}
+                  >
+                    {content.type === 'external_link' && (
+                      <span>
+                        <Link45deg
+                          fontSize={18}
+                          style={{
+                            margin: '8px 10px 0px 0px',
+                            color: '#808080',
+                          }}
+                        />
+                      </span>
+                    )}
+                    {content.type === 'board' && (
+                      <span>
+                        <ArrowReturnRight
+                          fontSize={18}
+                          style={{
+                            margin: '8px 10px 0px 0px',
+                            color: '#b8b8b8',
+                          }}
+                        />
+                      </span>
+                    )}
+                    <span style={{ color: '#3e4249' }}>{content.name}</span>
+                  </span>
+                </Link>
               ))}
             </Panel>
           ))}

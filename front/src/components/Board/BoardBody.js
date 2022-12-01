@@ -7,13 +7,12 @@ import { Avatar, List, Skeleton } from 'antd';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getTimeStamp } from '../common';
+import { getTimeStamp, Link } from '../common';
 import NicknameBadge from '../user/NicknameBadge';
 
 const BoardBody = () => {
   const posts = useSelector((state) => state.board.post.posts);
   const isLoading = useSelector((state) => state.board.isLoading);
-  const navigate = useNavigate();
 
   const [now, setNow] = useState(() => new Date());
 
@@ -22,10 +21,6 @@ const BoardBody = () => {
     //   setNow(new Date());
     // }, 900);
   }, []);
-
-  const onPostTitleClick = useCallback((uid) => {
-    navigate(`/board/post/${uid}`);
-  });
 
   return (
     <List
@@ -64,16 +59,17 @@ const BoardBody = () => {
                 ))
               }
               title={
-                <span
-                  style={{
-                    fontSize: '16px',
-                    fontWeight: 'bold',
-                    cursor: 'pointer',
-                  }}
-                  onClick={() => onPostTitleClick(item.postUID)}
-                >
-                  {item.title}
-                </span>
+                <Link href={`/board/post/${item.postUID}`}>
+                  <span
+                    style={{
+                      fontSize: '16px',
+                      fontWeight: 'bold',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {item.title}
+                  </span>
+                </Link>
               }
               description={
                 <div style={{ color: '#3b3b3b' }}>

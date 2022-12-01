@@ -1,7 +1,7 @@
 const db = require('./db');
 
 const menuModel = {
-  async get_menu_group_uids() {
+  async getMenuGroupUIDs() {
     let sql = `
     select uid, idx, name, seq
     from menu_group
@@ -11,7 +11,7 @@ const menuModel = {
     const params = [];
     return db.query(sql, params);
   },
-  async get_content_by_group_uid(menuGroupUID) {
+  async getContentByGroupUID(menuGroupUID) {
     let sql = `
     select
       uid, idx, menu_group_uid, name, ref, type, seq
@@ -23,7 +23,7 @@ const menuModel = {
     const params = [menuGroupUID];
     return db.query(sql, params);
   },
-  async add_menu_group(name) {
+  async addMenuGroup(name) {
     let sql = `
     insert into
       menu_group(
@@ -40,7 +40,7 @@ const menuModel = {
     const params = [uid, name];
     return db.query(sql, params);
   },
-  async add_menu_content(menuGroupUID, name, ref, type) {
+  async addMenuContent(menuGroupUID, name, ref, type) {
     let sql = `
     insert into
       menu_content(

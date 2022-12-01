@@ -14,7 +14,7 @@ router.post('/group/add', async (req, res) => {
     const isSufficient = [name].every((v) => v ?? false);
     if (!isSufficient) throw new InsufficientArgumentError();
 
-    const qr = await menuModel.add_menu_group(name);
+    const qr = await menuModel.addMenuGroup(name);
     if (qr.affectedRows === 1) {
       res.sendStatus(200);
     } else {
@@ -39,7 +39,7 @@ router.post('/content/add', async (req, res) => {
     ref = !ref ? null : ref;
     type = !type ? null : type;
 
-    const qr = await menuModel.add_menu_content(menuGroupUID, name, ref, type);
+    const qr = await menuModel.addMenuContent(menuGroupUID, name, ref, type);
     if (qr.affectedRows === 1) {
       res.sendStatus(200);
     } else {
@@ -56,11 +56,11 @@ router.post('/content/add', async (req, res) => {
 });
 router.get('/get', async (req, res) => {
   try {
-    const qr = await menuModel.get_menu_group_uids();
+    const qr = await menuModel.getMenuGroupUIDs();
     const menus = [];
     for (let r of qr) {
       r = { ...r, contents: [] };
-      const qrr = await menuModel.get_content_by_group_uid(r.uid);
+      const qrr = await menuModel.getContentByGroupUID(r.uid);
       for (let rr of qrr) {
         r.contents.push({ ...rr });
       }

@@ -47,7 +47,7 @@ const userModel = {
   },
   async login(id, pw) {
     const sql = `
-    select uid, idx, id, nickname, pw, auth, created_at
+    select uid, idx, id, nickname, auth, created_at
     from user
     where deleted_at is null
     and id = ?

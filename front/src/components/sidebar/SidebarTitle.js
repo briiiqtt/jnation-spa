@@ -20,7 +20,7 @@ const SidebarTitle = () => {
         }}
       >
         <span style={{ fontWeight: 'bold', fontSize: '1.6rem' }}>
-          제2의 나라: Cross Worlds
+          신의 탑:<br></br>위대한 여정
         </span>
         <div>
           <div>

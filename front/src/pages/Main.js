@@ -21,7 +21,7 @@ const Mainbanner = () => {
     <>
       <img
         style={{ width: '100%' }}
-        src="https://sgimage.netmarble.com/images/netmarble/enn/20220728/gaco1658997238633.png"
+        src="http://13.124.184.111:50080/resources/484a1158-9080-4946-98b8-80247624559a.png"
       />
     </>
   );
@@ -31,13 +31,13 @@ const MainYoutube = () => {
   return (
     <>
       <iframe
-        width="580"
-        height="294"
-        src="https://www.youtube.com/embed/Q8JY_YzSjew"
+        width="100%"
+        height="353px"
+        src="https://www.youtube.com/embed/OPm_ahpqREg"
         title="YouTube video player"
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
+        allowfullscreen
       ></iframe>
     </>
   );
@@ -47,23 +47,19 @@ const MainTabs = () => {
   const [tabs, setTabs] = useState([
     {
       key: 0,
-      imgSrc:
-        'https://sgimage.netmarble.com/images/netmarble/enn/20210617/ejxm1623921106723.jpg',
+      imgSrc: 'http://13.124.184.111:50080/resources/barogagi_1.png',
     },
     {
       key: 1,
-      imgSrc:
-        'https://sgimage.netmarble.com/images/netmarble/enn/20210617/ckcm1623921147617.jpg',
+      imgSrc: 'http://13.124.184.111:50080/resources/barogagi_2.png',
     },
     {
       key: 2,
-      imgSrc:
-        'https://sgimage.netmarble.com/images/netmarble/enn/20210617/ki7g1623921165875.jpg',
+      imgSrc: 'http://13.124.184.111:50080/resources/barogagi_3.png',
     },
     {
       key: 3,
-      imgSrc:
-        'https://sgimage.netmarble.com/images/netmarble/enn/20210617/hwwz1623921188479.jpg',
+      imgSrc: 'http://13.124.184.111:50080/resources/barogagi_4.png',
     },
   ]);
   return (
@@ -82,44 +78,28 @@ const BelowBanners = () => {
     {
       key: 0,
       imgSrc:
-        'https://sgimage.netmarble.com/images/netmarble/enn/20221117/f02h1668649428416.jpg',
+        'http://13.124.184.111:50080/resources/58ad8c1e-8c26-41ea-b6d6-87764ddc9b9f.png',
     },
     {
       key: 1,
       imgSrc:
-        'https://sgimage.netmarble.com/images/netmarble/enn/20221110/nrzo1668063853053.jpg',
+        'http://13.124.184.111:50080/resources/8c31c2ad-f4f7-4b07-8d72-a1e0be092096.png',
     },
     {
       key: 2,
       imgSrc:
-        'https://sgimage.netmarble.com/images/netmarble/enn/20220624/nc321656060936457.jpg',
-    },
-    {
-      key: 3,
-      imgSrc:
-        'https://sgimage.netmarble.com/images/netmarble/enn/20220623/wgrd1655971448321.jpg',
-    },
-    {
-      key: 4,
-      imgSrc:
-        'https://sgimage.netmarble.com/images/netmarble/enn/20220512/6eaf1652337249565.jpg',
-    },
-    {
-      key: 5,
-      imgSrc:
-        'https://sgimage.netmarble.com/images/netmarble/enn/20210715/qrqt1626336304211.jpg',
-    },
-    {
-      key: 6,
-      imgSrc:
-        'https://sgimage.netmarble.com/images/netmarble/enn/20220728/plye1658972198399.jpg',
+        'http://13.124.184.111:50080/resources/a4cc7d2b-8935-46a5-b3b2-2e657ebbecaa.png',
     },
   ]);
   return (
     <>
       <div>
         {banners.map((banner) => (
-          <img key={banner.key} src={banner.imgSrc}></img>
+          <img
+            key={banner.key}
+            src={banner.imgSrc}
+            style={{ width: '100%' }}
+          ></img>
         ))}
       </div>
     </>

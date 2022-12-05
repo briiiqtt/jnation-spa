@@ -33,7 +33,10 @@ const CenteredHeader = () => {
     <>
       <div style={headerStyle}>
         <span onClick={toMain} style={{ cursor: 'pointer' }}>
-          <img src="https://sgimage.netmarble.com/images/netmarble/enn/20210407/tpew1617761984326.png"></img>
+          <img
+            src="http://13.124.184.111:50080/resources/title_00_230x50.png"
+            style={{ height: '40px' }}
+          ></img>
         </span>
       </div>
     </>

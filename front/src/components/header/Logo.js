@@ -9,12 +9,15 @@ const Logo = () => {
           cursor: 'pointer',
           position: 'absolute',
           zIndex: 2,
-          right: '137px',
-          top: '5px',
+          right: '55px',
+          top: '8px',
         }}
       >
         <span>
-          <img src="https://sgimage.netmarble.com/images/netmarble/enn/20210407/tpew1617761984326.png"></img>
+          <img
+            src="http://13.124.184.111:50080/resources/title_00_230x50.png"
+            style={{ width: '190px' }}
+          ></img>
         </span>
       </span>
     </Link>

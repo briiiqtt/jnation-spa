@@ -1,26 +1,44 @@
-import { Form, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 import React from 'react';
 
 const CommentAdder = () => {
   return (
     <>
-      <div
-        style={{ backgroundColor: '#F3F5F7', padding: '28px', display: 'flex' }}
-      >
-        <span style={{ width: '5%' }}>
-          <img
-            style={{ width: '38px', height: '38px' }}
-            src="https://sgimage.netmarble.com/images/netmarble/enn/20210407/l8tl1617776607050.png"
-          ></img>
-        </span>
-        <span style={{ width: '90%' }}>
-          <Form>
+      <Form>
+        <div
+          style={{
+            backgroundColor: '#F3F5F7',
+            padding: '28px',
+            display: 'flex',
+          }}
+        >
+          <span style={{ width: '51px' }}>
+            <img
+              style={{ width: '38px', height: '38px' }}
+              src="https://sgimage.netmarble.com/images/netmarble/enn/20210407/l8tl1617776607050.png"
+            ></img>
+          </span>
+          <span style={{ width: '600px', marginRight: '10px' }}>
             <Form.Item>
-              <Input />
+              <Input style={{ height: '64px' }} />
             </Form.Item>
-          </Form>
-        </span>
-      </div>
+          </span>
+          <span>
+            <Form.Item>
+              <Button
+                style={{
+                  width: '88px',
+                  height: '64px',
+                  backgroundColor: '#818e9a',
+                  color: '#f1f2f3',
+                }}
+              >
+                등록
+              </Button>
+            </Form.Item>
+          </span>
+        </div>
+      </Form>
     </>
   );
 };

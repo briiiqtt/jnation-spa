@@ -1,15 +1,11 @@
 import 'antd/dist/antd.min.css';
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './css/app.css';
-import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import axios from 'axios';
-
-import BoardLayout from './layouts/BoardLayout';
-import Main from './pages/Main';
-import { Header } from 'antd/lib/layout/layout';
-import Join from './pages/Join';
 import NotFound from './components/404';
+import BoardLayout from './layouts/BoardLayout';
+import Join from './pages/Join';
 
 const App = () => {
   return (

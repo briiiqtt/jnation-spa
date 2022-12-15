@@ -9,6 +9,20 @@ const passport = require('passport');
 const passportConfig = require('./passport');
 passportConfig();
 
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+/*
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLEOAUTH_ID,
+      clientSecret: process.env.GOOGLEOAUTH_SECRET,
+      callbackURL: 'http://localhost',
+    },
+    function (accessToken, refreshToken, profile, cb) {}
+  )
+);
+*/
+
 const session = require('express-session');
 
 const userRouter = require('./routes/userRouter');

@@ -4,6 +4,8 @@ const userModel = require('../models/userModel');
 const InsufficientArgumentError = require('../Errors/InsufficientArgumentError');
 const LoginFailedError = require('../Errors/LoginFailedError');
 
+const passport = require('passport');
+
 router.use((req, res, next) => {
   next();
 });
@@ -83,29 +85,49 @@ router.get('/is_nickname_exist', async (req, res) => {
     }
   }
 });
-router.post('/login', async (req, res) => {
-  try {
-    const { id, pw } = req.body;
-    const isSufficient = [id, pw].every((v) => v ?? false);
-    if (!isSufficient) throw new InsufficientArgumentError();
-
-    const queryResult = await userModel.login(id, pw);
-    if (queryResult.length === 1) {
-      res.send(queryResult[0]);
-    } else {
-      throw new LoginFailedError();
+router.post('/login', function (req, res, next) {
+  // console.log('login', req.body);
+  passport.authenticate('local', (err, user, info) => {
+    // console.log('authenticate', user);
+    if (err) {
+      console.error(err);
+      next(err);
     }
-  } catch (e) {
-    if (e instanceof InsufficientArgumentError) {
-      res.sendStatus(400);
-    } else if (e instanceof LoginFailedError) {
-      res.sendStatus(401);
-    } else {
-      console.error(e);
-      res.sendStatus(500);
+    if (info) {
+      return res.status(401).send(info.reason);
     }
-  }
+    return req.login(user, async (loginErr) => {
+      if (loginErr) {
+        console.error(loginErr);
+        return next(loginErr);
+      }
+      return res.json(user);
+    });
+  })(req, res, next);
 });
+// router.post('/login', async (req, res) => {
+//   try {
+//     const { id, pw } = req.body;
+//     const isSufficient = [id, pw].every((v) => v ?? false);
+//     if (!isSufficient) throw new InsufficientArgumentError();
+
+//     const queryResult = await userModel.login(id, pw);
+//     if (queryResult.length === 1) {
+//       res.send(queryResult[0]);
+//     } else {
+//       throw new LoginFailedError();
+//     }
+//   } catch (e) {
+//     if (e instanceof InsufficientArgumentError) {
+//       res.sendStatus(400);
+//     } else if (e instanceof LoginFailedError) {
+//       res.sendStatus(401);
+//     } else {
+//       console.error(e);
+//       res.sendStatus(500);
+//     }
+//   }
+// });
 router.get('/total', async (req, res) => {
   try {
     const queryResult = await userModel.getUserTotal();

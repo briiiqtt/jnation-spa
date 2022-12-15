@@ -45,15 +45,25 @@ const userModel = {
     const params = [nickname];
     return db.query(sql, params);
   },
-  async login(id, pw) {
+  // async login(id, pw) {
+  //   const sql = `
+  //   select uid, idx, id, nickname, auth, created_at
+  //   from user
+  //   where deleted_at is null
+  //   and id = ?
+  //   and pw = ?
+  //   `;
+  //   const params = [id, pw];
+  //   return db.query(sql, params);
+  // },
+  async getUser(id) {
     const sql = `
-    select uid, idx, id, nickname, auth, created_at
+    select uid, idx, id, pw, nickname, auth, created_at
     from user
     where deleted_at is null
     and id = ?
-    and pw = ?
     `;
-    const params = [id, pw];
+    const params = [id];
     return db.query(sql, params);
   },
   async getUserTotal() {

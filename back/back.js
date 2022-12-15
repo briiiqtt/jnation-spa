@@ -5,9 +5,16 @@ const axios = require('axios');
 require('dotenv').config();
 const cors = require('cors');
 
+const passport = require('passport');
+const passportConfig = require('./passport');
+passportConfig();
+
+const session = require('express-session');
+
 const userRouter = require('./routes/userRouter');
 const menuRouter = require('./routes/menuRouter');
 const boardRouter = require('./routes/boardRouter');
+const cookieParser = require('cookie-parser');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -19,8 +26,19 @@ app.listen((port = 50080), async () => {
 app.use(
   cors({
     origin: true,
+    credentials: true,
   })
 );
+app.use(cookieParser());
+app.use(
+  session({
+    saveUninitialized: false,
+    resave: false,
+    secret: process.env.SECRET,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 function sleep(ms) {
   const wakeUpTime = Date.now() + ms;
@@ -28,7 +46,8 @@ function sleep(ms) {
 }
 
 app.use((req, res, next) => {
-  console.log(req.path);
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  console.log(req.user?.id, req.path);
   // sleep(1000);
   next();
 });

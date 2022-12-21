@@ -8,6 +8,8 @@ import React, {
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
+import axios from 'axios';
+
 import NotificDropdown from './NotificDropdown';
 import ProfileDropdown from './ProfileDropdown';
 
@@ -200,6 +202,11 @@ const LoginModal = ({ setIsLoginModalOn, isLoginModalOn }) => {
   const onModalCancel = useCallback(() => {
     setIsLoginModalOn(false);
   });
+
+  const googleLogin = useCallback(() => {
+    window.open('http://localhost:50080/user/login/google');
+    // axios.get('/user/login/google');
+  });
   return (
     <>
       <Modal
@@ -250,6 +257,16 @@ const LoginModal = ({ setIsLoginModalOn, isLoginModalOn }) => {
               style={{ width: '25%' }}
             >
               로그인
+            </Button>
+          </Form.Item>
+          <Form.Item style={{ textAlign: 'center' }}>
+            <Button
+              type="primary"
+              loading={isLoggingIn}
+              onClick={googleLogin}
+              style={{ width: '25%' }}
+            >
+              구글
             </Button>
           </Form.Item>
         </Form>

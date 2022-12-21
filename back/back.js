@@ -9,33 +9,12 @@ const passport = require('passport');
 const passportConfig = require('./passport');
 passportConfig();
 
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-/*
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLEOAUTH_ID,
-      clientSecret: process.env.GOOGLEOAUTH_SECRET,
-      callbackURL: 'http://localhost',
-    },
-    function (accessToken, refreshToken, profile, cb) {}
-  )
-);
-*/
-
 const session = require('express-session');
 
 const userRouter = require('./routes/userRouter');
 const menuRouter = require('./routes/menuRouter');
 const boardRouter = require('./routes/boardRouter');
 const cookieParser = require('cookie-parser');
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-app.listen((port = 50080), async () => {
-  console.log(`server started, port: ${port}`);
-});
 
 app.use(
   cors({
@@ -64,6 +43,13 @@ app.use((req, res, next) => {
   console.log(req.user?.id, req.path);
   // sleep(1000);
   next();
+});
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.listen((port = 50080), async () => {
+  console.log(`server started, port: ${port}`);
 });
 
 app.use('/user', userRouter);

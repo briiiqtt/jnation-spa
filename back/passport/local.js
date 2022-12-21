@@ -10,8 +10,7 @@ module.exports = () => {
       { usernameField: 'id', passwordField: 'pw' },
       async (id, pw, done) => {
         try {
-          const qr = await userModel.getUser(id);
-          const user = qr[0];
+          const user = await userModel.getUser(id);
           if (!user) done(null, false, { reason: '존재하지 않는 이메일' });
           const result = pw === user.pw; //await bcrypt.compare(password, user.password);
           delete user.pw;

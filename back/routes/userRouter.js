@@ -4,6 +4,8 @@ const userModel = require('../models/userModel');
 const InsufficientArgumentError = require('../Errors/InsufficientArgumentError');
 const LoginFailedError = require('../Errors/LoginFailedError');
 
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
 const passport = require('passport');
 
 router.use((req, res, next) => {
@@ -24,7 +26,7 @@ router.post('/add', async (req, res) => {
     const isSufficient = [id, pw, nickname].every((v) => v ?? false);
     if (!isSufficient) throw new InsufficientArgumentError();
 
-    const queryResult = await userModel.add_user(id, pw, nickname);
+    const queryResult = await userModel.addUser(id, pw, nickname);
     res.send({ affectedRows: queryResult.affectedRows, id, nickname });
   } catch (e) {
     if (e instanceof InsufficientArgumentError) {
@@ -85,10 +87,50 @@ router.get('/is_nickname_exist', async (req, res) => {
     }
   }
 });
+
+router.get('/login/google', function (req, res, next) {
+  passport.authenticate('google', { scope: ['email', 'profile'] })(
+    req,
+    res,
+    next
+  );
+});
+
+router.get('/login/google/callback', (req, res, next) => {
+  passport.authenticate(
+    'google',
+    {
+      successRedirect: '/',
+      failureRedirect: '/fail',
+      successFlash: 'good',
+      failureFlash: true,
+    },
+    (err, user, info) => {
+      console.log(99999999, err, user, info);
+      if (err) {
+        console.error(err);
+        next(err);
+      }
+      // if (info) {
+      //   return res.status(401).send(info.reason);
+      // }
+      // res.redirect('http://localhost');
+      return req.login(user, async (loginErr) => {
+        if (loginErr) {
+          console.error(loginErr);
+          return next(loginErr);
+        } else {
+          // res.json(user);
+          res.redirect('http://localhost');
+        }
+      });
+    }
+  )(req, res, next);
+});
+
 router.post('/login', function (req, res, next) {
   // console.log('login', req.body);
   passport.authenticate('local', (err, user, info) => {
-    // console.log('authenticate', user);
     if (err) {
       console.error(err);
       next(err);

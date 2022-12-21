@@ -6,7 +6,7 @@ const userModel = {
     const params = [];
     return db.query(sql, params);
   },
-  async add_user(id, pw, nickname) {
+  async addUser(id, pw, nickname) {
     let sql = `
     insert into
       user(
@@ -64,7 +64,7 @@ const userModel = {
     and id = ?
     `;
     const params = [id];
-    return db.query(sql, params);
+    return db.selectSingleRow(sql, params);
   },
   async getUserTotal() {
     const sql = `

@@ -19,6 +19,21 @@ const db = {
       });
     });
   },
+  selectSingleRow(sql, params) {
+    return new Promise((resolve, reject) => {
+      this.conn.query(sql, params, (err, res) => {
+        if (err) {
+          reject(err);
+        } else {
+          if (res.length > 1) {
+            reject(res);
+          } else {
+            resolve(res[0]);
+          }
+        }
+      });
+    });
+  },
 };
 
 module.exports = db;

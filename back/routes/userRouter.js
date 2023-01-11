@@ -18,6 +18,7 @@ router.get('/get_all', async (req, res) => {
     res.sendStatus(500);
   }
 });
+
 router.post('/add', async (req, res) => {
   try {
     const { id, pw, nickname } = req.body;
@@ -35,6 +36,7 @@ router.post('/add', async (req, res) => {
     }
   }
 });
+
 router.get('/is_id_exist', async (req, res) => {
   try {
     const { id } = req.query;
@@ -60,6 +62,7 @@ router.get('/is_id_exist', async (req, res) => {
     }
   }
 });
+
 router.get('/is_nickname_exist', async (req, res) => {
   try {
     const { nickname } = req.query;
@@ -101,7 +104,9 @@ router.get(
   }),
   async (req, res, next) => {
     console.log(req.user);
-    return res.send('<script>window.close();</script>');
+    return res.redirect(
+      `${process.env.FRONTEND_PROTOCOL}://${process.env.FRONTEND_HOST}:${process.env.FRONTEND_PORT}`
+    );
   }
 );
 
@@ -134,6 +139,7 @@ router.get('/logout', function (req, res, next) {
     }
   });
 });
+
 router.get('/total', async (req, res) => {
   try {
     const queryResult = await userModel.getUserTotal();
@@ -147,6 +153,14 @@ router.get('/total', async (req, res) => {
       console.error(e);
       res.sendStatus(500);
     }
+  }
+});
+
+router.get('/get-session', (req, res) => {
+  if (req.user) {
+    res.status(200).send(req.user);
+  } else {
+    res.status(400).send(null);
   }
 });
 

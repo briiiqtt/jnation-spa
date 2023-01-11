@@ -9,6 +9,9 @@ import {
   LOG_OUT_ERR,
   LOG_OUT_REQ,
   LOG_OUT_SUC,
+  GET_SESSION_REQ,
+  GET_SESSION_SUC,
+  GET_SESSION_ERR,
 } from '../reducers/userReducer';
 
 import axios from 'axios';
@@ -20,7 +23,10 @@ function joinAPI(data) {
   return axios.post('/user/add', data);
 }
 function logoutAPI(data) {
-  return axios.get('/user/logout', data);
+  return axios.get('/user/logout');
+}
+function getSessionAPI(data) {
+  return axios.get('/user/get-session');
 }
 
 function* login(action) {
@@ -40,7 +46,7 @@ function* login(action) {
 }
 function* logout(action) {
   try {
-    const res = yield call(logoutAPI, action.data);
+    const res = yield call(logoutAPI);
     console.log(res);
     yield put({
       type: LOG_OUT_SUC,
@@ -66,12 +72,28 @@ function* join(action) {
     });
   }
 }
+function* getSession(action) {
+  try {
+    const res = yield call(getSessionAPI);
+    yield put({
+      type: GET_SESSION_SUC,
+      data: res.data,
+    });
+  } catch (error) {
+    console.error(error);
+    yield put({
+      type: GET_SESSION_ERR,
+      data: error.response.data,
+    });
+  }
+}
 
 // function* watchLogin() {
 //   // take() -> action{ type: '', data: {} ... } 액션 객체가
 //   // 두번째 인자인 함수* login(action)으로 전달된다
 //   yield throttle(LOG_IN_REQ, login, 10000);
 // }
+
 function* watchLogin() {
   yield takeLatest(LOG_IN_REQ, login);
 }
@@ -81,7 +103,15 @@ function* watchLogout() {
 function* watchJoin() {
   yield takeLatest(JOIN_REQ, join);
 }
+function* watchGetSession() {
+  yield takeLatest(GET_SESSION_REQ, getSession);
+}
 
 export default function* userSaga() {
-  yield all([fork(watchLogin), fork(watchLogout), fork(watchJoin)]);
+  yield all([
+    fork(watchLogin),
+    fork(watchLogout),
+    fork(watchJoin),
+    fork(watchGetSession),
+  ]);
 }

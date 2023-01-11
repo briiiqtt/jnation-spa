@@ -7,6 +7,9 @@ export const LOG_OUT_ERR = 'LOG_OUT_ERR';
 export const JOIN_REQ = 'JOIN_REQ';
 export const JOIN_SUC = 'JOIN_SUC';
 export const JOIN_ERR = 'JOIN_ERR';
+export const GET_SESSION_REQ = 'GET_SESSION_REQ';
+export const GET_SESSION_SUC = 'GET_SESSION_SUC';
+export const GET_SESSION_ERR = 'GET_SESSION_ERR';
 
 export const action_login = (data) => ({
   type: LOG_IN_REQ,
@@ -19,6 +22,9 @@ export const action_join = (data) => ({
 export const action_logout = () => ({
   type: LOG_OUT_REQ,
 });
+export const action_getSession = () => ({
+  type: GET_SESSION_REQ,
+});
 
 const initialState = {
   me: null,
@@ -26,6 +32,7 @@ const initialState = {
   isLoggingIn: false,
   isLoggingOut: false,
   isJoining: false,
+  isGettingSession: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -89,6 +96,28 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isJoining: false,
+      };
+    }
+    case GET_SESSION_REQ: {
+      return {
+        ...state,
+        isGettingSession: true,
+      };
+    }
+    case GET_SESSION_SUC: {
+      console.log(action.data);
+      return {
+        ...state,
+        isGettingSession: false,
+        isLoggedIn: true,
+        me: action.data,
+      };
+    }
+    case GET_SESSION_ERR: {
+      return {
+        ...state,
+        isGettingSession: false,
+        isLoggedIn: false,
       };
     }
     default: {

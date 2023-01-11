@@ -23,11 +23,20 @@ app.use(
   })
 );
 app.use(cookieParser());
+
+const MySQLStore = require('express-mysql-session')(session);
+const sessionStore = new MySQLStore({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PW,
+  database: process.env.DB_DATABASE,
+});
 app.use(
   session({
     saveUninitialized: false,
     resave: false,
     secret: process.env.SECRET,
+    store: sessionStore,
   })
 );
 app.use(passport.initialize());

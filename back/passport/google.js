@@ -8,7 +8,7 @@ module.exports = () => {
       {
         clientID: process.env.GOOGLEOAUTH_ID,
         clientSecret: process.env.GOOGLEOAUTH_SECRET,
-        callbackURL: `${process.env.FRONTEND_PROTOCOL}://${process.env.FRONTEND_HOST}:${process.env.FRONTEND_PORT}/user/login/google/callback`,
+        callbackURL: `/user/login/google/callback`,
       },
       async (accessToken, refreshToken, profile, done) => {
         try {

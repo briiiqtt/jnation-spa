@@ -90,39 +90,6 @@ const NotLoggedInButtons = ({ setIsLoginModalOn, isLoginModalOn }) => {
   const login = useCallback(() => {
     console.log(isLoginModalOn);
     setIsLoginModalOn(true);
-    // function init() {
-    //   gapi.load('auth2', function () {
-    //     gapi.auth2.init();
-    //     options = new gapi.auth2.SigninOptionsBuilder();
-    //     options.setPrompt('select_account');
-    //     // 추가는 Oauth 승인 권한 추가 후 띄어쓰기 기준으로 추가
-    //     options.setScope(
-    //       'email profile openid https://www.googleapis.com/auth/user.birthday.read'
-    //     );
-    //     // 인스턴스의 함수 호출 - element에 로그인 기능 추가
-    //     // GgCustomLogin은 li태그안에 있는 ID, 위에 설정한 options와 아래 성공,실패시 실행하는 함수들
-    //     gapi.auth2
-    //       .getAuthInstance()
-    //       .attachClickHandler(
-    //         'GgCustomLogin',
-    //         options,
-    //         onSignIn,
-    //         onSignInFailure
-    //       );
-    //   });
-    // }
-
-    // function onSignIn(googleUser) {
-    //   const access_token = googleUser.getAuthResponse().access_token;
-    //   const key = 'AIzaSyD_iVPXO2lCCyYN2wx_LInFp7ur3gScmz4';
-    //   fetch(
-    //     `https://people.googleapis.com/v1/people/me?personFields=birthdays&key=${key}&access_token=${access_token}`
-    //   );
-    // }
-    // function onSignInFailure(t) {
-    //   console.log(t);
-    // }
-    // init();
   });
   const btnStyle = useMemo(() => ({
     backgroundColor: '#2d2121',
@@ -204,8 +171,9 @@ const LoginModal = ({ setIsLoginModalOn, isLoginModalOn }) => {
   });
 
   const googleLogin = useCallback(() => {
-    window.open('http://localhost:50080/user/login/google');
-    // axios.get('/user/login/google');
+    window.open(
+      `${process.env.REACT_APP_BACKEND_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/user/login/google`
+    );
   });
   return (
     <>

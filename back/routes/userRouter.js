@@ -101,8 +101,7 @@ router.get(
   }),
   async (req, res, next) => {
     console.log(req.user);
-    return res.status(200).redirect('http://localhost');
-    return res.json(req.user);
+    return res.send('<script>window.close();</script>');
   }
 );
 

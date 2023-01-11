@@ -14,10 +14,13 @@ import {
 import axios from 'axios';
 
 function loginAPI(data) {
-  return axios.post('user/login', data);
+  return axios.post('/user/login', data);
 }
 function joinAPI(data) {
   return axios.post('/user/add', data);
+}
+function logoutAPI(data) {
+  return axios.get('/user/logout', data);
 }
 
 function* login(action) {
@@ -37,6 +40,8 @@ function* login(action) {
 }
 function* logout(action) {
   try {
+    const res = yield call(logoutAPI, action.data);
+    console.log(res);
     yield put({
       type: LOG_OUT_SUC,
     });

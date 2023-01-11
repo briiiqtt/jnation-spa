@@ -17,10 +17,10 @@ function getMenuAPI() {
   return axios.get('/menu/get');
 }
 function addMenuGroupAPI(data) {
-  return axios.post('menu/group/add', data);
+  return axios.post('/menu/group/add', data);
 }
 function addMenuContentAPI(data) {
-  return axios.post('menu/content/add', data);
+  return axios.post('/menu/content/add', data);
 }
 
 function* getMenu() {

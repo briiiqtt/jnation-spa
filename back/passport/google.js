@@ -8,13 +8,12 @@ module.exports = () => {
       {
         clientID: process.env.GOOGLEOAUTH_ID,
         clientSecret: process.env.GOOGLEOAUTH_SECRET,
-        callbackURL: 'http://127.0.0.1:50080/user/login/google/callback',
+        callbackURL: `${process.env.FRONTEND_PROTOCOL}://${process.env.FRONTEND_HOST}:${process.env.FRONTEND_PORT}/user/login/google/callback`,
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
           const user = await userModel.getUser(profile.id);
           if (user) {
-            console.log(124124);
             return done(null, user);
           } else {
             const res = await userModel.addUser(

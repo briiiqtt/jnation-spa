@@ -172,7 +172,9 @@ const LoginModal = ({ setIsLoginModalOn, isLoginModalOn }) => {
 
   const googleLogin = useCallback(() => {
     window.open(
-      `${process.env.REACT_APP_BACKEND_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/user/login/google`
+      `${process.env.REACT_APP_BACKEND_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/user/login/google`,
+      '',
+      'top=0, left=0, width=500, height=700, status=no, menubar=no, toolbar=no, resizable=no, titlebar=no'
     );
   });
   return (

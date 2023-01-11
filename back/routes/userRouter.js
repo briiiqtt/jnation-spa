@@ -97,7 +97,7 @@ router.get('/login/google', function (req, res, next) {
 router.get(
   '/login/google/callback',
   passport.authenticate('google', {
-    failureRedirect: '/',
+    failureRedirect: `${process.env.REACT_APP_BACKEND_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}`,
   }),
   async (req, res, next) => {
     console.log(req.user);
